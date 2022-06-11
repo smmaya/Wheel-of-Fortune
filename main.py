@@ -16,6 +16,8 @@ total = 0
 alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
 # Kategorie, słowa i frazesy
+# with open("kategorie.json", "r") as scan:
+    # categories = scan.read()
 categories = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zieleń', 'fiolet', 'granat'],
               'Przysłowia polskie': ["Z osła konia wyścigowego nie zrobisz", "spokojnie jak na wojnie",
                                      "chcieć to móc", "cała mądrość nie mieści się w jednej głowie",
