@@ -36,6 +36,9 @@ numberOfLetters: int
 wordLastLetter: int
 wordTeens: bool
 
+amount: int
+PRICE_FOR_LETTER_TEXT_POSITION = (50, 560)
+
 CATEGORIES = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zieleń', 'fiolet', 'granat'],
 'Przysłowia polskie': ["Z osła konia wyścigowego nie zrobisz", "spokojnie jak na wojnie",
 "chcieć to móc", "cała mądrość nie mieści się w jednej głowie",
@@ -50,6 +53,8 @@ CATEGORIES = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zi
 'Wanda Chotomska', 'Cyprian Kamil Norwid', 'Adam Mickiewicz'],
 'Państwa': ['argentyna', 'wybrzeże kości słoniowej', 'zjednoczone emiraty arabskie',
 'szwajcaria', 'watykan', 'polska', 'wielka brytania', 'australia']}
+
+AMOUNTS = [500, 750, 1000, 1250, 1500, 1750, 5000]
 
 def setBackground():
     WINDOW.fill(BG_COLOR)
@@ -89,6 +94,15 @@ def setCategoryText():
     WINDOW.blit(categoryText, (category_text_x_position, CATEGORY_TEXT_Y_POSITION))
     WINDOW.blit(numberOfLettersText, (numberOfLetters_text_x_position, NUMBER_OF_LETTERS_Y_POSITION))
 
+
+def setPriceForLetter():
+    global amount
+    amount = AMOUNTS[randint(0, (len(AMOUNTS) - 1))]
+
+def setPriceForLetterText():
+    priceForLetterText = DESCRIPTION_FONT.render(f'Otrzymasz ${str(amount)} za poprawną literę', 1, DESCRIPTION_FONT_COLOR)
+    WINDOW.blit(priceForLetterText, PRICE_FOR_LETTER_TEXT_POSITION)    
+
 def setTextBox():
     pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, INPUT_BOX)
     pygame.draw.rect(WINDOW, BG_COLOR, INPUT_BOX_FILL)
@@ -98,6 +112,7 @@ def setTextBox():
 def main():
     global inputBoxText
     setCategory()
+    setPriceForLetter()
     pygame.display.set_caption("Koło NIEfortuny")
     clock = pygame.time.Clock()
     run = True
@@ -116,6 +131,7 @@ def main():
         setGameDescription()
         setCategoryText()
         setTextBox()
+        setPriceForLetterText()
         pygame.display.update()
     pygame.quit()
 
