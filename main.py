@@ -37,7 +37,13 @@ wordLastLetter: int
 wordTeens: bool
 
 amount: int
-PRICE_FOR_LETTER_TEXT_POSITION = (50, 560)
+PRICE_FOR_LETTER_TEXT_POSITION = (50, 520)
+
+balance = 0
+BALANCE_DESCRIPTION_TEXT_POSITION = (850, 520)
+CURRENT_BALANCE_BOX = pygame.Rect(1000, 510, 230, 60)
+CURRENT_BALANCE_BOX_FILL = pygame.Rect(1003, 513, 224, 54)
+CURRENT_BALANCE_TEXT_POSITION = (1010, 520)
 
 CATEGORIES = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zieleń', 'fiolet', 'granat'],
 'Przysłowia polskie': ["Z osła konia wyścigowego nie zrobisz", "spokojnie jak na wojnie",
@@ -101,7 +107,15 @@ def setPriceForLetter():
 
 def setPriceForLetterText():
     priceForLetterText = DESCRIPTION_FONT.render(f'Otrzymasz ${str(amount)} za poprawną literę', 1, DESCRIPTION_FONT_COLOR)
-    WINDOW.blit(priceForLetterText, PRICE_FOR_LETTER_TEXT_POSITION)    
+    WINDOW.blit(priceForLetterText, PRICE_FOR_LETTER_TEXT_POSITION)  
+
+def setCurrentBalance():
+    pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, CURRENT_BALANCE_BOX)
+    pygame.draw.rect(WINDOW, BG_COLOR, CURRENT_BALANCE_BOX_FILL)
+    balanceDescriptionText = DESCRIPTION_FONT.render('Posiadasz', 1, DESCRIPTION_FONT_COLOR)
+    currentBalanceText = INPUT_BOX_FONT.render(f'${balance}', 1, INPUT_BOX_FONT_COLOR)
+    WINDOW.blit(balanceDescriptionText, BALANCE_DESCRIPTION_TEXT_POSITION)
+    WINDOW.blit(currentBalanceText, CURRENT_BALANCE_TEXT_POSITION)
 
 def setTextBox():
     pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, INPUT_BOX)
@@ -132,6 +146,7 @@ def main():
         setCategoryText()
         setTextBox()
         setPriceForLetterText()
+        setCurrentBalance()
         pygame.display.update()
     pygame.quit()
 
