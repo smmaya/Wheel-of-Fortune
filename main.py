@@ -13,10 +13,10 @@ MAIN_FONT_COLOR = (241, 196, 15) # R, G, B
 DESCRIPTION_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
 DESCRIPTION_FONT_COLOR = (52, 152, 219) # R, G, B
 
-GAME_NAME_LOGO_POSITION = (10, 10) # X, Y
-DESCRIPTION1_POSITION = (10, 60) # X, Y
-DESCRIPTION2_POSITION = (10, 100) # X, Y
-DESCRIPTION3_POSITION = (10, 140) # X, Y
+GAME_NAME_LOGO_POSITION = (342, 10) # X, Y      342 because width of welcomeText is 596 -> (1280 - 596) / 2 = 342. This is done on purpose of center the welcomeText
+DESCRIPTION1_POSITION = (158, 60) # X, Y        158 because width of description1 is 964
+DESCRIPTION2_POSITION = (161, 100) # X, Y       161 because width of description1 is 958
+DESCRIPTION3_POSITION = (119, 140) # X, Y       119 because width of description1 is 1041
 
 INPUT_BOX = pygame.Rect(50, 610, 1180, 60) # X, Y, WIDTH, HEIGHT 
 INPUT_BOX_COLOR = (243, 156, 18) # R, G, B
