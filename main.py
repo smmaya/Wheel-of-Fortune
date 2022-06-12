@@ -1,4 +1,6 @@
+from lib2to3.pgen2.token import NUMBER
 import pygame
+from random import randint
 
 pygame.init()
 
@@ -26,6 +28,29 @@ INPUT_BOX_FONT_COLOR = (41, 128, 185) # R, G, B
 inputBoxText = ''
 INPUT_BOX_TEXT_POSITION = (60, 620) # X, Y
 
+CATEGORY_TEXT_Y_POSITION = 220
+NUMBER_OF_LETTERS_Y_POSITION = 260
+category: str
+word: str
+numberOfLetters: int
+wordLastLetter: int
+wordTeens: bool
+
+CATEGORIES = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zieleń', 'fiolet', 'granat'],
+'Przysłowia polskie': ["Z osła konia wyścigowego nie zrobisz", "spokojnie jak na wojnie",
+"chcieć to móc", "cała mądrość nie mieści się w jednej głowie",
+"cel uświęca środki", "chciwy dwa razy traci",
+"chłop potęgą jest i basta", "ciągnie wilka do lasu",
+"cierpliwością i pracą ludzie się bogacą", "co ma piernik do wiatraka",
+"co nagle to po diable", 'czyny przemawiają głośniej niż słowa'],
+'Gwiazdy Hollywood\'u': ['jean-claude van damme', 'sylvester stallone', 'sharon stone', 'tom cruise',
+'robert de niro', 'al pacino', 'westley snipes', 'jennifer aniston',
+'julia roberts', 'courtney cox', 'sean connery', 'morgan freeman'],
+'Poeci polscy': ['Julian Tuwim', 'Jan Brzechwa', 'Maria Konopnicka', 'Aleksander Fredro',
+'Wanda Chotomska', 'Cyprian Kamil Norwid', 'Adam Mickiewicz'],
+'Państwa': ['argentyna', 'wybrzeże kości słoniowej', 'zjednoczone emiraty arabskie',
+'szwajcaria', 'watykan', 'polska', 'wielka brytania', 'australia']}
+
 def setBackground():
     WINDOW.fill(BG_COLOR)
 
@@ -41,6 +66,29 @@ def setGameDescription():
     WINDOW.blit(description2, DESCRIPTION2_POSITION)
     WINDOW.blit(description3, DESCRIPTION3_POSITION)
 
+def setCategory():
+    global category, word, numberOfLetters, wordLastLetter, wordTeens
+    categoryID = randint(0, (len(CATEGORIES) - 1))
+    category = list(CATEGORIES.keys())[categoryID]
+    word = (CATEGORIES[list(CATEGORIES.keys())[categoryID]][randint(0, (len(list(CATEGORIES[list(CATEGORIES.keys())[categoryID]])) - 1))]).upper()
+    numberOfLetters = len(word) - word.count(" ") - word.count("-")
+    wordLastLetter = int(repr(numberOfLetters)[-1])
+    wordTeens = numberOfLetters not in range(5, 22)
+
+def setCategoryText():
+    categoryText = DESCRIPTION_FONT.render(f'Kategoria: {category}', 1, DESCRIPTION_FONT_COLOR)
+    category_text_x_position = (WIDTH - categoryText.get_size()[0]) / 2
+    numberOfLettersText: pygame.Surface
+    if(numberOfLetters in range(2, 5) or wordLastLetter == 2 and wordTeens \
+        or wordLastLetter == 3 and wordTeens \
+        or wordLastLetter == 4 and wordTeens):
+        numberOfLettersText = DESCRIPTION_FONT.render(f'Na {numberOfLetters} litery', 1, DESCRIPTION_FONT_COLOR)
+    else:
+        numberOfLettersText = DESCRIPTION_FONT.render(f'Na {numberOfLetters} liter', 1, DESCRIPTION_FONT_COLOR)
+    numberOfLetters_text_x_position = (WIDTH - numberOfLettersText.get_size()[0]) /2    
+    WINDOW.blit(categoryText, (category_text_x_position, CATEGORY_TEXT_Y_POSITION))
+    WINDOW.blit(numberOfLettersText, (numberOfLetters_text_x_position, NUMBER_OF_LETTERS_Y_POSITION))
+
 def setTextBox():
     pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, INPUT_BOX)
     pygame.draw.rect(WINDOW, BG_COLOR, INPUT_BOX_FILL)
@@ -49,6 +97,7 @@ def setTextBox():
 
 def main():
     global inputBoxText
+    setCategory()
     pygame.display.set_caption("Koło NIEfortuny")
     clock = pygame.time.Clock()
     run = True
@@ -65,6 +114,7 @@ def main():
         setBackground()
         setGameNameLogo()
         setGameDescription()
+        setCategoryText()
         setTextBox()
         pygame.display.update()
     pygame.quit()
