@@ -21,6 +21,10 @@ DESCRIPTION3_POSITION = (10, 140) # X, Y
 INPUT_BOX = pygame.Rect(50, 610, 1180, 60) # X, Y, WIDTH, HEIGHT 
 INPUT_BOX_COLOR = (243, 156, 18) # R, G, B
 INPUT_BOX_FILL = pygame.Rect(53, 613, 1174, 54) # X, Y, WIDTH, HEIGHT 
+INPUT_BOX_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
+INPUT_BOX_FONT_COLOR = (41, 128, 185) # R, G, B
+inputBoxText = 'text input box content to check position etc.'
+INPUT_BOX_TEXT_POSITION = (60, 620) # X, Y
 
 def setBackground():
     WINDOW.fill(BG_COLOR)
@@ -40,6 +44,8 @@ def setGameDescription():
 def setTextBox():
     pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, INPUT_BOX)
     pygame.draw.rect(WINDOW, BG_COLOR, INPUT_BOX_FILL)
+    textBoxContent = INPUT_BOX_FONT.render(inputBoxText, 1, INPUT_BOX_FONT_COLOR)
+    WINDOW.blit(textBoxContent, INPUT_BOX_TEXT_POSITION)
 
 def main():
     pygame.display.set_caption("Koło NIEfortuny")
