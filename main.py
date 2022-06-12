@@ -1,3 +1,6 @@
+import json
+import os
+import sys
 from random import randint
 # Zasady
 title = 'Koło niefortuny!'.upper()
@@ -13,11 +16,13 @@ amounts = [500, 750, 1000, 1250, 1500, 1750, 5000]
 total = 0
 
 # Lista liter do zdjęcia z tablicy po poprawnym trafieniu
-alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C',
+            'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
 # Kategorie, słowa i frazesy
+'''Nie wiem jak to gówno użyć ładując z jsona, wywala, że słownik nie posiada upper() ani count()'''
 # with open("kategorie.json", "r") as scan:
-    # categories = scan.read()
+#     categories = json.load(scan)
 categories = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zieleń', 'fiolet', 'granat'],
               'Przysłowia polskie': ["Z osła konia wyścigowego nie zrobisz", "spokojnie jak na wojnie",
                                      "chcieć to móc", "cała mądrość nie mieści się w jednej głowie",
@@ -26,14 +31,13 @@ categories = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zi
                                      "cierpliwością i pracą ludzie się bogacą", "co ma piernik do wiatraka",
                                      "co nagle to po diable", 'czyny przemawiają głośniej niż słowa'],
               'Gwiazdy Hollywood\'u': ['jean-claude van damme', 'sylvester stallone', 'sharon stone', 'tom cruise',
-                         'robert de niro', 'al pacino', 'westley snipes', 'jennifer aniston',
+                            'robert de niro', 'al pacino', 'westley snipes', 'jennifer aniston',
                            'julia roberts', 'courtney cox', 'sean connery', 'morgan freeman'],
               'Poeci polscy': ['Julian Tuwim', 'Jan Brzechwa', 'Maria Konopnicka', 'Aleksander Fredro',
                                'Wanda Chotomska', 'Cyprian Kamil Norwid', 'Adam Mickiewicz'],
               'Państwa': ['argentyna', 'wybrzeże kości słoniowej', 'zjednoczone emiraty arabskie',
                           'szwajcaria', 'watykan', 'polska', 'wielka brytania', 'australia']
               }
-
 # Losowy wybór kategorii
 category = randint(0, (len(categories) - 1))
 # Wypisz kategorię
@@ -104,7 +108,6 @@ while True:
                     printWord(Word)
                     break
                 if '_' not in Word:
-                    print('-' * 30)
                     printWord(Word)
                     break
                 else:
@@ -132,7 +135,6 @@ while True:
             else:
                 print('Za mało pieniędzy')
             print('Posiadasz: $' + str(total))
-            print('-' * 30)
             printWord(Word)
             if '_' not in Word:
                 break
@@ -149,7 +151,18 @@ while True:
                 break
     # Całe słowo lub zdanie odgadnięte, koniec gry.
     if '_' not in Word:
+        print('=' * 30)
         print('Brawo!')
         print('Twoja wygrana: $' + str(total))
         print('=' * 30)
-        break
+        newGame = str(input('Gramy dalej? (t/n): '))
+        if newGame == 't':
+            print('\nNowa gra:')
+            os.execl(sys.executable, sys.executable, *sys.argv)
+        if newGame == 'n':
+            print("Dziękujemy za grę, do zobaczenia.")
+            break
+        else:
+            print("To nie było śmieszne, żegnam.")
+            break
+
