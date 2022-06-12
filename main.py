@@ -23,7 +23,7 @@ INPUT_BOX_COLOR = (243, 156, 18) # R, G, B
 INPUT_BOX_FILL = pygame.Rect(53, 613, 1174, 54) # X, Y, WIDTH, HEIGHT 
 INPUT_BOX_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
 INPUT_BOX_FONT_COLOR = (41, 128, 185) # R, G, B
-inputBoxText = 'text input box content to check position etc.'
+inputBoxText = ''
 INPUT_BOX_TEXT_POSITION = (60, 620) # X, Y
 
 def setBackground():
@@ -48,6 +48,7 @@ def setTextBox():
     WINDOW.blit(textBoxContent, INPUT_BOX_TEXT_POSITION)
 
 def main():
+    global inputBoxText
     pygame.display.set_caption("Koło NIEfortuny")
     clock = pygame.time.Clock()
     run = True
@@ -56,6 +57,11 @@ def main():
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 run = False
+            if(event.type == pygame.KEYDOWN):
+                if(event.key == pygame.K_BACKSPACE):
+                    inputBoxText = inputBoxText[:-1]
+                else:
+                    inputBoxText += event.unicode    
         setBackground()
         setGameNameLogo()
         setGameDescription()
