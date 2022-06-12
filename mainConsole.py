@@ -5,7 +5,7 @@ print('=' * 30)
 print(title)
 print('=' * 30)
 print('''Zgaduj po jednej literze na raz. Aby kupić samogłoskę, musisz mieć $500.
-Jeśli sądzisz, że znasz całe słowo lub zsanie, wpisz \'bingo\' i wciśnij enter, potem podaj słowo lub zdanie.
+Jeśli sądzisz, że znasz całe słowo lub zdanie, wpisz \'bingo\' i wciśnij enter, potem podaj słowo lub zdanie.
 Otrzymasz wtedy wartość każdej litery a samogłośki za darmo.''')
 print('=' * 30)
 
