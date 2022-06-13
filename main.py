@@ -138,7 +138,7 @@ while True:
                 break
     # Całe słowo lub zdanie odgadnięte, koniec gry.
     if '_' not in Word:
-        with open("wyniki.txt", "a") as w:
+        with open("wyniki.txt", "a", encoding='utf-8') as w:
             w.write(player + ' ' + str(total) + '\n')
             w.close()
         print('=' * 30)
