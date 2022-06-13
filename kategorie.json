@@ -1,94 +1,94 @@
 {
 	"kategorie":[
 		{
-			"kolory":"biały"
+			"Kolory":"biały"
 		},
 		{
-			"kolory":"czarny"
+			"Kolory":"czarny"
 		},
 		{
-			"kolory":"żółty"
+			"Kolory":"żółty"
 		},
 		{
-			"kolory":"czerwony"
+			"Kolory":"czerwony"
 		},
 		{
-			"kolory":"zielony"
+			"Kolory":"zielony"
 		},
 		{
-			"gwiazdy Hollywoodu":"sharon stone"
+			"Gwiazdy Hollywoodu":"sharon stone"
 		},
 		{
-			"gwiazdy Hollywoodu":"sylvester stallone"
+			"Gwiazdy Hollywoodu":"sylvester stallone"
 		},
 		{
-			"gwiazdy Hollywoodu":"al pacino"
+			"Gwiazdy Hollywoodu":"al pacino"
 		},
 		{
-			"gwiazdy Hollywoodu":"denzel washington"
+			"Gwiazdy Hollywoodu":"denzel washington"
 		},
 		{
-			"gwiazdy Hollywoodu":"morgan freeman"
+			"Gwiazdy Hollywoodu":"morgan freeman"
 		},
 		{
-			"poeci polscy":"adam mickiewicz"
+			"Poeci Polscy":"adam mickiewicz"
 		},
 		{
-			"poeci polscy":"julian tuwin"
+			"Poeci Polscy":"julian tuwin"
 		},
 		{
-			"poeci polscy":"jan brzechwa"
+			"Poeci Polscy":"jan brzechwa"
 		},
 		{
-			"poeci polscy":"maria konopnicka"
+			"Poeci Polscy":"maria konopnicka"
 		},
 		{
-			"poeci polscy":"cyprian kamil norwid"
+			"Poeci Polscy":"cyprian kamil norwid"
 		},
 		{
-			"przysłowia":"cała mądrość nie mieści się w jednej głowie"
+			"Przysłowia Polskie":"cała mądrość nie mieści się w jednej głowie"
 		},
 		{
-			"przysłowia":"cel uświęca środki"
+			"Przysłowia Polskie":"cel uświęca środki"
 		},
 		{
-			"przysłowia":"chciwy dwa razy traci"
+			"Przysłowia Polskie":"chciwy dwa razy traci"
 		},
 		{
-			"przysłowia":"chłop potęgą jest i basta"
+			"Przysłowia Polskie":"chłop potęgą jest i basta"
 		},
 		{
-			"przysłowia":"co nagle to po diable"
+			"Przysłowia Polskie":"co nagle to po diable"
 		},
 		{
-			"państwa":"wybrzeże kości słoniowej"
+			"Państwa":"wybrzeże kości słoniowej"
 		},
 		{
-			"państwa":"argentyna"
+			"Państwa":"argentyna"
 		},
 		{
-			"państwa":"polska"
+			"Państwa":"polska"
 		},
 		{
-			"państwa":"watykan"
+			"Państwa":"watykan"
 		},
 		{
-			"państwa":"zjednoczone emiraty arabskie"
+			"Państwa":"zjednoczone emiraty arabskie"
 		},
 		{
-			"owoce":"banan"
+			"Owoce":"banan"
 		},
 		{
-			"państwa":"kiwi"
+			"Owoce":"kiwi"
 		},
 		{
-			"państwa":"arbuz"
+			"Owoce":"arbuz"
 		},
 		{
-			"państwa":"jabłko"
+			"Owoce":"jabłko"
 		},
 		{
-			"państwa":"borówka amerykańska"
+			"Owoce":"borówka amerykańska"
 		}
 	]
 }

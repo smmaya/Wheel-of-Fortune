@@ -1,4 +1,4 @@
-from lib2to3.pgen2.token import NUMBER
+import json
 import pygame
 from random import randint
 
@@ -45,20 +45,9 @@ CURRENT_BALANCE_BOX = pygame.Rect(1000, 510, 230, 60)
 CURRENT_BALANCE_BOX_FILL = pygame.Rect(1003, 513, 224, 54)
 CURRENT_BALANCE_TEXT_POSITION = (1010, 520)
 
-CATEGORIES = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zieleń', 'fiolet', 'granat'],
-'Przysłowia polskie': ["Z osła konia wyścigowego nie zrobisz", "spokojnie jak na wojnie",
-"chcieć to móc", "cała mądrość nie mieści się w jednej głowie",
-"cel uświęca środki", "chciwy dwa razy traci",
-"chłop potęgą jest i basta", "ciągnie wilka do lasu",
-"cierpliwością i pracą ludzie się bogacą", "co ma piernik do wiatraka",
-"co nagle to po diable", 'czyny przemawiają głośniej niż słowa'],
-'Gwiazdy Hollywood\'u': ['jean-claude van damme', 'sylvester stallone', 'sharon stone', 'tom cruise',
-'robert de niro', 'al pacino', 'westley snipes', 'jennifer aniston',
-'julia roberts', 'courtney cox', 'sean connery', 'morgan freeman'],
-'Poeci polscy': ['Julian Tuwim', 'Jan Brzechwa', 'Maria Konopnicka', 'Aleksander Fredro',
-'Wanda Chotomska', 'Cyprian Kamil Norwid', 'Adam Mickiewicz'],
-'Państwa': ['argentyna', 'wybrzeże kości słoniowej', 'zjednoczone emiraty arabskie',
-'szwajcaria', 'watykan', 'polska', 'wielka brytania', 'australia']}
+with open('kategorie.json', 'r', encoding='utf-8') as file:
+    content = json.loads(file.read())
+CATEGORIES = content['kategorie']
 
 AMOUNTS = [500, 750, 1000, 1250, 1500, 1750, 5000]
 
@@ -80,8 +69,9 @@ def setGameDescription():
 def setCategory():
     global category, word, numberOfLetters, wordLastLetter, wordTeens
     categoryID = randint(0, (len(CATEGORIES) - 1))
-    category = list(CATEGORIES.keys())[categoryID]
-    word = (CATEGORIES[list(CATEGORIES.keys())[categoryID]][randint(0, (len(list(CATEGORIES[list(CATEGORIES.keys())[categoryID]])) - 1))]).upper()
+    category = list(CATEGORIES[categoryID])[0]
+    word = list(CATEGORIES[categoryID].values())[0].upper()
+    print(category, word)
     numberOfLetters = len(word) - word.count(" ") - word.count("-")
     wordLastLetter = int(repr(numberOfLetters)[-1])
     wordTeens = numberOfLetters not in range(5, 22)
