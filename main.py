@@ -19,32 +19,16 @@ total = 0
 alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C',
             'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
-# Kategorie, słowa i frazesy
-'''Nie wiem jak to gówno użyć ładując z jsona, wywala, że słownik nie posiada upper() ani count()'''
-# with open("kategorie.json", "r") as scan:
-#     categories = json.load(scan)
-categories = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zieleń', 'fiolet', 'granat'],
-              'Przysłowia polskie': ["Z osła konia wyścigowego nie zrobisz", "spokojnie jak na wojnie",
-                                     "chcieć to móc", "cała mądrość nie mieści się w jednej głowie",
-                                     "cel uświęca środki", "chciwy dwa razy traci",
-                                     "chłop potęgą jest i basta", "ciągnie wilka do lasu",
-                                     "cierpliwością i pracą ludzie się bogacą", "co ma piernik do wiatraka",
-                                     "co nagle to po diable", 'czyny przemawiają głośniej niż słowa'],
-              'Gwiazdy Hollywood\'u': ['jean-claude van damme', 'sylvester stallone', 'sharon stone', 'tom cruise',
-                            'robert de niro', 'al pacino', 'westley snipes', 'jennifer aniston',
-                           'julia roberts', 'courtney cox', 'sean connery', 'morgan freeman'],
-              'Poeci polscy': ['Julian Tuwim', 'Jan Brzechwa', 'Maria Konopnicka', 'Aleksander Fredro',
-                               'Wanda Chotomska', 'Cyprian Kamil Norwid', 'Adam Mickiewicz'],
-              'Państwa': ['argentyna', 'wybrzeże kości słoniowej', 'zjednoczone emiraty arabskie',
-                          'szwajcaria', 'watykan', 'polska', 'wielka brytania', 'australia']
-              }
+# Kategorie, słowa i frazesy z pliko json
+with open("kategorie.json", "r") as scan:
+    content = json.loads(scan.read())
 # Losowy wybór kategorii
-category = randint(0, (len(categories) - 1))
+categories = content['kategorie']
+category = randint(0, len(categories)-1)
 # Wypisz kategorię
-print('Kategoria:', '{', list(categories.keys())[category], '}')
+print('Kategoria:', '{', str(list(categories[category])[0]).upper(), '}')
 # Losowy wybór słowa lub zdania
-word = (categories[list(categories.keys())[category]][
-    randint(0, (len(list(categories[list(categories.keys())[category]])) - 1))]).upper()
+word = str(list(categories[category].values())[0]).upper()
 wordCount = len(word) - word.count(" ") - word.count("-")
 wordRange = wordCount in range(22, 92)
 wordLastLetter = int(repr(wordCount)[-1])
@@ -165,4 +149,3 @@ while True:
         else:
             print("To nie było śmieszne, żegnam.")
             break
-
