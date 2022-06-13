@@ -1,9 +1,12 @@
+import heapq
 import json
+import operator
 import os
 import sys
 from random import randint
 # Zasady
-title = 'Koło niefortuny!'.upper()
+player = input('Podaj swoje imię: ')
+title = f'Witaj {player}, grasz w Koło fortuny!'.upper()
 print('=' * 30)
 print(title)
 print('=' * 30)
@@ -135,6 +138,9 @@ while True:
                 break
     # Całe słowo lub zdanie odgadnięte, koniec gry.
     if '_' not in Word:
+        with open("wyniki.txt", "a") as w:
+            w.write(player + ' ' + str(total) + '\n')
+            w.close()
         print('=' * 30)
         print('Brawo!')
         print('Twoja wygrana: $' + str(total))
@@ -149,3 +155,16 @@ while True:
         else:
             print("To nie było śmieszne, żegnam.")
             break
+wynik = {}
+position = 0
+with open("wyniki.txt", "r") as wyniki:
+    for line in wyniki:
+        (k, v) = line.split()
+        wynik[k] = int(v)
+sorted_dsc = dict(sorted(wynik.items(), key=operator.itemgetter(1), reverse=True))
+top10 = heapq.nlargest(5, wynik, key=wynik.get)
+print('\nWyniki 5 najlepszych graczy:')
+for i in top10:
+    position += 1
+    print(position, i, wynik[i])
+wyniki.close()
