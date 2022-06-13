@@ -32,3 +32,10 @@ Adam 1250
 Sławek 6500
 Adam 22000
 Darek 14250
+Genowefa 6000
+Bartek 10750
+Jan 1000
+Ola 5500
+Ala 17500
+Bartłomiej 16250
+Bartłomiej 35750
