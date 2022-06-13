@@ -23,7 +23,7 @@ alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', '�
             'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
 # Kategorie, słowa i frazesy z pliko json
-with open("kategorie.json", "r") as scan:
+with open("kategorie.json", "r", encoding='utf-8') as scan:
     content = json.loads(scan.read())
 # Losowy wybór kategorii
 categories = content['kategorie']
@@ -157,7 +157,7 @@ while True:
             break
 wynik = {}
 position = 0
-with open("wyniki.txt", "r") as wyniki:
+with open("wyniki.txt", "r", encoding='utf-8') as wyniki:
     for line in wyniki:
         (k, v) = line.split()
         wynik[k] = int(v)
