@@ -157,13 +157,8 @@ while True:
             break
 wyniki = {}
 position = 0
-<<<<<<< HEAD
-with open("wyniki.txt", "r", encoding='utf-8') as wyniki:
-    for line in wyniki:
-=======
-with open("wyniki.txt", "r") as wynik:
+with open("wyniki.txt", "r", encoding='utf-8') as wynik:
     for line in wynik:
->>>>>>> 5644a1316983749770a05f15c8884c4e46023fa6
         (k, v) = line.split()
         wyniki[k] = int(v)
 # sortedScores = dict(sorted(wyniki.items(), key=operator.itemgetter(1), reverse=True))  # Niepotrzebna opcja
