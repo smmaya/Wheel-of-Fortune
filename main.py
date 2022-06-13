@@ -26,7 +26,7 @@ with open("kategorie.json", "r") as scan:
 categories = content['kategorie']
 category = randint(0, len(categories)-1)
 # Wypisz kategorię
-print('Kategoria:', '{', str(list(categories[category])[0]).upper(), '}')
+print('Kategoria:', str(list(categories[category])[0]).upper())
 # Losowy wybór słowa lub zdania
 word = str(list(categories[category].values())[0]).upper()
 wordCount = len(word) - word.count(" ") - word.count("-")
