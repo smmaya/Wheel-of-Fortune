@@ -65,3 +65,9 @@ c 60000
 c 30000
 C 2500
 c 9000
+Bolek 16000
+Adam 4500
+Adam 1500
+Adam 16500
+Adam 13750
+Darek 7250
