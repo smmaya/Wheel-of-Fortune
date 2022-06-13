@@ -39,3 +39,10 @@ Ola 5500
 Ala 17500
 Bartłomiej 16250
 Bartłomiej 35750
+Sławek 6000
+Sławek 16500
+Sławek 13750
+Sławek 11250
+Sławek 2250
+Sławek 2500
+Sławek 70000
