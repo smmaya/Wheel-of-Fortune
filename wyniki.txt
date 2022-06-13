@@ -46,3 +46,4 @@ Sławek 11250
 Sławek 2250
 Sławek 2500
 Sławek 70000
+Bolek 16000
