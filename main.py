@@ -155,16 +155,16 @@ while True:
         else:
             print("To nie było śmieszne, żegnam.")
             break
-wynik = {}
+wyniki = {}
 position = 0
-with open("wyniki.txt", "r") as wyniki:
-    for line in wyniki:
+with open("wyniki.txt", "r") as wynik:
+    for line in wynik:
         (k, v) = line.split()
-        wynik[k] = int(v)
-sorted_dsc = dict(sorted(wynik.items(), key=operator.itemgetter(1), reverse=True))
-top10 = heapq.nlargest(5, wynik, key=wynik.get)
+        wyniki[k] = int(v)
+# sortedScores = dict(sorted(wyniki.items(), key=operator.itemgetter(1), reverse=True))  # Niepotrzebna opcja
+topPlayers = heapq.nlargest(5, wyniki, key=wyniki.get)
 print('\nWyniki 5 najlepszych graczy:')
-for i in top10:
+for i in topPlayers:
     position += 1
-    print(str(position).ljust(3), str(i).ljust(15), str(wynik[i]).ljust(1))
-wyniki.close()
+    print(str(position).ljust(3), str(i).ljust(15), str(wyniki[i]).ljust(1))
+wynik.close()

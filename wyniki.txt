@@ -47,3 +47,8 @@ Sławek 2250
 Sławek 2500
 Sławek 70000
 Bolek 16000
+Adam 4500
+Adam 1500
+Adam 16500
+Adam 13750
+Darek 7250
