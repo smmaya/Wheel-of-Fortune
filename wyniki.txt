@@ -68,3 +68,10 @@ Darek 7250
 Adam 15000
 Darek 4500
 Sławek 7000
+Sławek 20000
+Sławek 7000
+Sławek 8750
+Sławek 13750
+Sławek 20750
+Sławek 41000
+Sławek 24500

@@ -1,7 +1,9 @@
+import collections
 import heapq
 import json
 import operator
 import os
+import re
 import sys
 from random import randint
 # Zasady
@@ -161,10 +163,12 @@ with open("wyniki.txt", "r", encoding='utf-8') as wynik:
     for line in wynik:
         (k, v) = line.split()
         wyniki[k] = int(v)
-# sortedScores = dict(sorted(wyniki.items(), key=operator.itemgetter(1), reverse=True))  # Niepotrzebna opcja
-topPlayers = heapq.nlargest(5, wyniki, key=wyniki.get)
-print('\nWyniki 5 najlepszych graczy:')
-for i in topPlayers:
+
+textToLines = open('wyniki.txt').read().splitlines()
+topPlayers = sorted(textToLines, key=lambda x: int(re.search('\d+', x).group(0)), reverse=True)
+topPlayersCount = 10
+print(f'\nWyniki {topPlayersCount} najlepszych graczy:')
+for i in topPlayers[:topPlayersCount]:
     position += 1
-    print(str(position).ljust(3), str(i).ljust(15), str(wyniki[i]).ljust(1))
+    print(str(position).ljust(2), str(i).ljust(15))
 wynik.close()
