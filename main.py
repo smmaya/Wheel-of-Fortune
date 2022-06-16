@@ -334,7 +334,7 @@ def main():
         setWinMessage()
         pygame.display.update()
         if(win):
-            sleep(1)
+            sleep(10)
             break
     while(run):
         clock.tick(FPS)
