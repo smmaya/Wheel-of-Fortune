@@ -107,7 +107,7 @@ def setBackground():
     WINDOW.fill(BG_COLOR)
 
 def setGameNameLogo():
-    welcomeText = MAIN_FONT.render('Witamy w grze "Koło NIEfortuny"', 1, MAIN_FONT_COLOR)
+    welcomeText = MAIN_FONT.render('Witamy w grze "NIEKoło NIEfortuny"', 1, MAIN_FONT_COLOR)
     WINDOW.blit(welcomeText, GAME_NAME_LOGO_POSITION)
 
 def setGameDescription():
