@@ -278,7 +278,7 @@ def main():
     setNotConstantVariables()
     setCategory()
     setPriceForLetter()
-    pygame.display.set_caption("Koło NIEfortuny")
+    pygame.display.set_caption("NIEKoło NIEfortuny")
     clock = pygame.time.Clock()
     run = True
     while(run):
