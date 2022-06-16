@@ -48,6 +48,7 @@ SECOND_ROW_BOX_Y_POS = 380
 SECOND_ROW_BOX_FILL_Y_POS = 383
 THIRD_ROW_BOX_Y_POS = 450
 THIRD_ROW_BOX_FILL_Y_POS = 453
+COMMA_FONT = pygame.font.SysFont('Lato', 60) # FontFamily, FontSize
 
 amount: int
 PRICE_FOR_LETTER_TEXT_POSITION = (50, 540)
@@ -140,6 +141,8 @@ def setWordPuzzle():
         for char in singleWord:
             pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, FIRST_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, FIRST_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
+            if(char == ','):
+                WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS - 15))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = secondRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (secondRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -148,6 +151,8 @@ def setWordPuzzle():
         for char in singleWord:
             pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, SECOND_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, SECOND_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
+            if(char == ','):
+                WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS - 15))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = thirdRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (thirdRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -156,6 +161,8 @@ def setWordPuzzle():
         for char in singleWord:
             pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, THIRD_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, THIRD_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
+            if(char == ','):
+                WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS - 15))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
 
