@@ -75,3 +75,6 @@ Sławek 13750
 Sławek 20750
 Sławek 41000
 Sławek 24500
+Adam 11500
+Adam 9750
+Adam 12250
