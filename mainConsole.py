@@ -1,7 +1,4 @@
-import collections
-import heapq
 import json
-import operator
 import os
 import random
 import re
@@ -166,13 +163,13 @@ with open("wyniki.txt", "r", encoding='utf-8') as wynik:
         (k, v) = line.split()
         wyniki[k] = int(v)
 
-textToLines = open('wyniki.txt').read().splitlines()
+textToLines = open('wyniki.txt', 'r', encoding='utf-8').read().splitlines()
 topPlayers = sorted(textToLines, key=lambda x: int(re.search('\d+', x).group(0)), reverse=True)
 topPlayersCount = 10
 print(f'\nWyniki {topPlayersCount} najlepszych graczy:')
 for i in topPlayers[:topPlayersCount]:
     position += 1
     print(str(position).ljust(2),
-          str(re.findall('(\w+[a-zA-Z])', str(i))).removeprefix('[\'').removesuffix('\']').ljust(15),
-          '$' + str(re.findall('\d+', str(i))).removeprefix('[\'').removesuffix('\']'))
+          str(re.findall('(\w+[a-zA-Z])', str(i)))[2:-2].ljust(15),
+          '$' + str(re.findall('\d+', str(i)))[2:-2])
 wynik.close()
