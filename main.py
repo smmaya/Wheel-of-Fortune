@@ -1,6 +1,7 @@
 import json
 import pygame
 from random import choices, randint
+from time import sleep
 
 pygame.init()
 
@@ -59,11 +60,48 @@ CURRENT_BALANCE_BOX = pygame.Rect(1000, 530, 230, 60)
 CURRENT_BALANCE_BOX_FILL = pygame.Rect(1003, 533, 224, 54)
 CURRENT_BALANCE_TEXT_POSITION = (1010, 540)
 
+alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+            'V', 'W', 'X', 'Y', 'Z']
+
+vowels = ['A', 'E', 'I', 'O', 'U']
+
+guessedLetters = []
+
+error_message_type = int(0)
+ERROR_MESSAGE_FONT = DESCRIPTION_FONT
+ERROR_MESSAGE_FONT_COLOR = (192, 57, 43)
+ERROR_MESSAGE_Y_POS = 620
+
+bingo = False
+
+WIN_MESSAGE_FONT = DESCRIPTION_FONT
+WIN_MESSAGE_FONT_COLOR = (39, 174, 96)
+WIN_MESSAGE_Y_POS = ERROR_MESSAGE_Y_POS
+
+win = False
+
 with open('kategorie.json', 'r', encoding='utf-8') as file:
     content = json.loads(file.read())
 CATEGORIES = content['kategorie']
 
 AMOUNTS = [500, 750, 1000, 1250, 1500, 1750, 5000]
+
+def setNotConstantVariables():
+    global inputBoxText, category, word, numberOfLetters, wordLastLetter, wordTeens, amount, balance, alphabet, vowels, guessedLetters, error_message_type, bingo, win
+    inputBoxText = str()
+    category = str()
+    word = str()
+    numberOfLetters = int()
+    wordLastLetter = int()
+    wordTeens = bool()
+    amount = int()
+    balance = int(0)
+    alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    vowels = ['A', 'E', 'I', 'O', 'U']
+    guessedLetters = []
+    error_message_type = int(0)
+    bingo = False
+    win = False
 
 def setBackground():
     WINDOW.fill(BG_COLOR)
@@ -85,7 +123,6 @@ def setCategory():
     categoryID = randint(0, (len(CATEGORIES) - 1))
     category = list(CATEGORIES[categoryID])[0]
     word = list(CATEGORIES[categoryID].values())[0].upper()
-    print(category, word)
     numberOfLetters = len(word) - word.count(" ") - word.count("-")
     wordLastLetter = int(repr(numberOfLetters)[-1])
     wordTeens = numberOfLetters not in range(5, 22)
@@ -143,6 +180,13 @@ def setWordPuzzle():
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, FIRST_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
             if(char == ','):
                 WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS - 15))
+            if(char in guessedLetters):
+                if(char == 'M'):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, FIRST_ROW_BOX_Y_POS + 10))
+                elif(char == 'I'):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, FIRST_ROW_BOX_Y_POS + 10))
+                else:
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS + 10))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = secondRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (secondRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -153,6 +197,13 @@ def setWordPuzzle():
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, SECOND_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
             if(char == ','):
                 WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS - 15))
+            if(char in guessedLetters):
+                if(char == 'M'):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, SECOND_ROW_BOX_Y_POS + 10))
+                elif(char == 'I'):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, SECOND_ROW_BOX_Y_POS + 10))
+                else:
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS + 10))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = thirdRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (thirdRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -163,6 +214,13 @@ def setWordPuzzle():
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, THIRD_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
             if(char == ','):
                 WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS - 15))
+            if(char in guessedLetters):
+                if(char == 'M'):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, THIRD_ROW_BOX_Y_POS + 10))
+                elif(char == 'I'):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, THIRD_ROW_BOX_Y_POS + 10))
+                else:
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS + 10))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
 
@@ -188,8 +246,36 @@ def setTextBox():
     textBoxContent = INPUT_BOX_FONT.render(inputBoxText, 1, INPUT_BOX_FONT_COLOR)
     WINDOW.blit(textBoxContent, INPUT_BOX_TEXT_POSITION)
 
+def setErrorMessageBox():
+    if(error_message_type == 0):
+        return
+    elif(error_message_type == 1):
+        errorMessage = ERROR_MESSAGE_FONT.render('Już użyłeś/aś tej litery!', 1, ERROR_MESSAGE_FONT_COLOR)
+        errorMessage_X_Pos = (WIDTH - errorMessage.get_size()[0]) /2
+        WINDOW.blit(errorMessage, (errorMessage_X_Pos, ERROR_MESSAGE_Y_POS))
+    elif(error_message_type == 2):
+        errorMessage = ERROR_MESSAGE_FONT.render('Za mało pieniędzy!', 1, ERROR_MESSAGE_FONT_COLOR)
+        errorMessage_X_Pos = (WIDTH - errorMessage.get_size()[0]) /2
+        WINDOW.blit(errorMessage, (errorMessage_X_Pos, ERROR_MESSAGE_Y_POS))
+    elif(error_message_type == 3):
+        errorMessage = ERROR_MESSAGE_FONT.render('Niestety nie, to nie jest dobra odpowiedź!', 1, ERROR_MESSAGE_FONT_COLOR)
+        errorMessage_X_Pos = (WIDTH - errorMessage.get_size()[0]) /2
+        WINDOW.blit(errorMessage, (errorMessage_X_Pos, ERROR_MESSAGE_Y_POS))
+
+def setWinMessage():
+    if(win):
+        winMessage = WIN_MESSAGE_FONT.render(f'Brawo! Twoja wygrana: ${str(balance)}', 1, WIN_MESSAGE_FONT_COLOR)
+        winMessage_X_Pos = (WIDTH - winMessage.get_size()[0]) /2
+        WINDOW.blit(winMessage, (winMessage_X_Pos, WIN_MESSAGE_Y_POS))
+
+def playAgainMessage():
+    playAgain = WIN_MESSAGE_FONT.render(f'Aby zagrać ponownie, wpisz "TAK"', 1, WIN_MESSAGE_FONT_COLOR)
+    playAgain_X_Pos = (WIDTH - playAgain.get_size()[0]) /2
+    WINDOW.blit(playAgain, (playAgain_X_Pos, WIN_MESSAGE_Y_POS))
+
 def main():
-    global inputBoxText
+    global inputBoxText, alphabet, error_message_type, balance, bingo, win
+    setNotConstantVariables()
     setCategory()
     setPriceForLetter()
     pygame.display.set_caption("Koło NIEfortuny")
@@ -201,8 +287,39 @@ def main():
             if(event.type == pygame.QUIT):
                 run = False
             if(event.type == pygame.KEYDOWN):
+                error_message_type = '0'
                 if(event.key == pygame.K_BACKSPACE):
                     inputBoxText = inputBoxText[:-1]
+                elif(event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
+                    inputBoxText = inputBoxText.upper()
+                    if(bingo):
+                        if(inputBoxText == word):
+                            win = True
+                            inputBoxText = ''
+                            break
+                        else:
+                            bingo = False
+                            error_message_type = 3
+                    elif(inputBoxText == 'BINGO'):
+                        bingo = True
+                    elif(inputBoxText not in alphabet):
+                        error_message_type = 1
+                        setPriceForLetter()
+                    elif(inputBoxText in vowels):
+                        if(balance >= 500):
+                            alphabet.remove(inputBoxText)
+                            balance -= 500
+                        else:
+                            error_message_type = 2
+                        setPriceForLetter()
+                    else:
+                        alphabet.remove(inputBoxText)
+                        guessedLetters.append(inputBoxText)
+                        for char in range(len(word)):
+                            if word[char] == inputBoxText:
+                                balance += amount
+                        setPriceForLetter()
+                    inputBoxText = ''
                 else:
                     inputBoxText += event.unicode    
         setBackground()
@@ -213,8 +330,41 @@ def main():
         setPriceForLetterText()
         setCurrentBalance()
         setTextBox()
+        setErrorMessageBox()
+        setWinMessage()
+        pygame.display.update()
+        if(win):
+            sleep(1)
+            break
+    while(run):
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if(event.type == pygame.QUIT):
+                run = False
+            if(event.type == pygame.KEYDOWN):
+                if(event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
+                    inputBoxText = inputBoxText.upper()
+                    if(inputBoxText == "TAK"):
+                        return True
+                    else:
+                        return False
+                else:
+                    inputBoxText += event.unicode
+        setBackground()
+        setGameNameLogo()
+        setGameDescription()
+        setCategoryText()
+        setWordPuzzle()
+        setPriceForLetterText()
+        setCurrentBalance()
+        setTextBox()
+        playAgainMessage()    
         pygame.display.update()
     pygame.quit()
 
 if __name__ == "__main__":
-    main()    
+    run = True
+    while(run):
+        run = main()
+    pygame.quit()
+        
