@@ -1,11 +1,21 @@
+import collections
+import heapq
+import json
+import operator
+import os
+import random
+import re
+import sys
 from random import randint
+
 # Zasady
-title = 'Koło niefortuny!'.upper()
+player = input('Podaj swoje imię: ')
+title = f'Witaj {player}, grasz w Koło fortuny!'.upper()
 print('=' * 30)
 print(title)
 print('=' * 30)
 print('''Zgaduj po jednej literze na raz. Aby kupić samogłoskę, musisz mieć $500.
-Jeśli sądzisz, że znasz całe słowo lub zdanie, wpisz \'bingo\' i wciśnij enter, potem podaj słowo lub zdanie.
+Jeśli sądzisz, że znasz całe słowo lub zsanie, wpisz \'bingo\' i wciśnij enter, potem podaj słowo lub zdanie.
 Otrzymasz wtedy wartość każdej litery a samogłośki za darmo.''')
 print('=' * 30)
 
@@ -13,34 +23,19 @@ amounts = [500, 750, 1000, 1250, 1500, 1750, 5000]
 total = 0
 
 # Lista liter do zdjęcia z tablicy po poprawnym trafieniu
-alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C',
+            'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
-# Kategorie, słowa i frazesy
-# with open("kategorie.json", "r") as scan:
-    # categories = scan.read()
-categories = {'Kolory': ['biel', 'czerń', 'czerwień', 'błękit', 'brąz', 'zieleń', 'fiolet', 'granat'],
-              'Przysłowia polskie': ["Z osła konia wyścigowego nie zrobisz", "spokojnie jak na wojnie",
-                                     "chcieć to móc", "cała mądrość nie mieści się w jednej głowie",
-                                     "cel uświęca środki", "chciwy dwa razy traci",
-                                     "chłop potęgą jest i basta", "ciągnie wilka do lasu",
-                                     "cierpliwością i pracą ludzie się bogacą", "co ma piernik do wiatraka",
-                                     "co nagle to po diable", 'czyny przemawiają głośniej niż słowa'],
-              'Gwiazdy Hollywood\'u': ['jean-claude van damme', 'sylvester stallone', 'sharon stone', 'tom cruise',
-                         'robert de niro', 'al pacino', 'westley snipes', 'jennifer aniston',
-                           'julia roberts', 'courtney cox', 'sean connery', 'morgan freeman'],
-              'Poeci polscy': ['Julian Tuwim', 'Jan Brzechwa', 'Maria Konopnicka', 'Aleksander Fredro',
-                               'Wanda Chotomska', 'Cyprian Kamil Norwid', 'Adam Mickiewicz'],
-              'Państwa': ['argentyna', 'wybrzeże kości słoniowej', 'zjednoczone emiraty arabskie',
-                          'szwajcaria', 'watykan', 'polska', 'wielka brytania', 'australia']
-              }
-
+# Kategorie, słowa i frazesy z pliko json
+with open("kategorie.json", "r", encoding='utf-8') as scan:
+    content = json.loads(scan.read())
 # Losowy wybór kategorii
-category = randint(0, (len(categories) - 1))
+categories = content['kategorie']
+category = randint(0, len(categories)-1)
 # Wypisz kategorię
-print('Kategoria:', '{', list(categories.keys())[category], '}')
+print('Kategoria:', str(list(categories[category])[0]).upper())
 # Losowy wybór słowa lub zdania
-word = (categories[list(categories.keys())[category]][
-    randint(0, (len(list(categories[list(categories.keys())[category]])) - 1))]).upper()
+word = str(list(categories[category].values())[0]).upper()
 wordCount = len(word) - word.count(" ") - word.count("-")
 wordRange = wordCount in range(22, 92)
 wordLastLetter = int(repr(wordCount)[-1])
@@ -77,8 +72,8 @@ vowels = ['A', 'E', 'I', 'O', 'U']
 # Zgaduj zgadula, do bólu
 while True:
     while True:
-        # Losowy wybór wygranej za odgadniętą literę
-        amount = amounts[randint(0, (len(amounts) - 1))]
+        # Losowy wybór wygranej wagowej za odgadniętą literę
+        amount = int(str(random.choices(amounts, weights=(70, 60, 50, 40, 30, 20, 10), k=1))[1:-1])
         print('Otrzymasz $' + str(amount), 'za poprawną literę')
         print('Zapłacisz $500 za samogłoskę')
         guess = input('Zgaduj, podaj literę: \n').upper()
@@ -104,7 +99,6 @@ while True:
                     printWord(Word)
                     break
                 if '_' not in Word:
-                    print('-' * 30)
                     printWord(Word)
                     break
                 else:
@@ -132,7 +126,6 @@ while True:
             else:
                 print('Za mało pieniędzy')
             print('Posiadasz: $' + str(total))
-            print('-' * 30)
             printWord(Word)
             if '_' not in Word:
                 break
@@ -149,7 +142,37 @@ while True:
                 break
     # Całe słowo lub zdanie odgadnięte, koniec gry.
     if '_' not in Word:
+        with open("wyniki.txt", "a", encoding='utf-8') as w:
+            w.write(player + ' ' + str(total) + '\n')
+            w.close()
+        print('=' * 30)
         print('Brawo!')
         print('Twoja wygrana: $' + str(total))
         print('=' * 30)
-        break
+        newGame = str(input('Gramy dalej? (t/n): '))
+        if newGame == 't':
+            print('\nNowa gra:')
+            os.execl(sys.executable, sys.executable, *sys.argv)
+        if newGame == 'n':
+            print("Dziękujemy za grę, do zobaczenia.")
+            break
+        else:
+            print("To nie było śmieszne, żegnam.")
+            break
+wyniki = {}
+position = 0
+with open("wyniki.txt", "r", encoding='utf-8') as wynik:
+    for line in wynik:
+        (k, v) = line.split()
+        wyniki[k] = int(v)
+
+textToLines = open('wyniki.txt').read().splitlines()
+topPlayers = sorted(textToLines, key=lambda x: int(re.search('\d+', x).group(0)), reverse=True)
+topPlayersCount = 10
+print(f'\nWyniki {topPlayersCount} najlepszych graczy:')
+for i in topPlayers[:topPlayersCount]:
+    position += 1
+    print(str(position).ljust(2),
+          str(re.findall('(\w+[a-zA-Z])', str(i))).removeprefix('[\'').removesuffix('\']').ljust(15),
+          '$' + str(re.findall('\d+', str(i))).removeprefix('[\'').removesuffix('\']'))
+wynik.close()
