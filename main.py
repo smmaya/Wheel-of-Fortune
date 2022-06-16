@@ -36,14 +36,27 @@ numberOfLetters: int
 wordLastLetter: int
 wordTeens: bool
 
+MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW = 23 # Because 1180 (1280 - 50 - 50 = 1180 | 50 is margin on each side) : 50 = 23.6 ~ 23
+SINGLE_LETTER_BOX_WIDTH = 40
+SINGLE_LETTER_BOX_HEIGHT = 60
+SINGLE_LETTER_BOX_FILL_WIDTH = 34
+SINGLE_LETTER_BOX_FILL_HEIGHT = 54
+SPACE_BETWEEN_LETTERS = 10
+FIRST_ROW_BOX_Y_POS = 310
+FIRST_ROW_BOX_FILL_Y_POS = 313
+SECOND_ROW_BOX_Y_POS = 380
+SECOND_ROW_BOX_FILL_Y_POS = 383
+THIRD_ROW_BOX_Y_POS = 450
+THIRD_ROW_BOX_FILL_Y_POS = 453
+
 amount: int
-PRICE_FOR_LETTER_TEXT_POSITION = (50, 520)
+PRICE_FOR_LETTER_TEXT_POSITION = (50, 540)
 
 balance = 0
-BALANCE_DESCRIPTION_TEXT_POSITION = (850, 520)
-CURRENT_BALANCE_BOX = pygame.Rect(1000, 510, 230, 60)
-CURRENT_BALANCE_BOX_FILL = pygame.Rect(1003, 513, 224, 54)
-CURRENT_BALANCE_TEXT_POSITION = (1010, 520)
+BALANCE_DESCRIPTION_TEXT_POSITION = (850, 540)
+CURRENT_BALANCE_BOX = pygame.Rect(1000, 530, 230, 60)
+CURRENT_BALANCE_BOX_FILL = pygame.Rect(1003, 533, 224, 54)
+CURRENT_BALANCE_TEXT_POSITION = (1010, 540)
 
 with open('kategorie.json', 'r', encoding='utf-8') as file:
     content = json.loads(file.read())
@@ -90,6 +103,61 @@ def setCategoryText():
     WINDOW.blit(categoryText, (category_text_x_position, CATEGORY_TEXT_Y_POSITION))
     WINDOW.blit(numberOfLettersText, (numberOfLetters_text_x_position, NUMBER_OF_LETTERS_Y_POSITION))
 
+def setWordPuzzle():
+    global word
+    words = word.split()
+    isFirstFull, isSecondFull = False, False
+    firstRowLetterSize, secondRowLetterSize, thirdRowLetterSize = int(0), int(0), int(0)
+    firstRow, secondRow, thirdRow = list[str](), list[str](), list[str]()
+    for singleWord in words:
+        if(isFirstFull == False):
+            if(firstRowLetterSize + len(singleWord) + 1 > MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW):
+                isFirstFull = True
+        elif(isSecondFull == False):
+            if(secondRowLetterSize + len(singleWord) + 1 > MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW):
+                isSecondFull = True
+        if(isFirstFull == False):
+            if(firstRowLetterSize == 0):
+                firstRowLetterSize += len(singleWord)
+            else:
+                firstRowLetterSize += len(singleWord) + 1   
+            firstRow.append(singleWord)
+        elif(isSecondFull == False):
+            if(secondRowLetterSize == 0):
+                secondRowLetterSize += len(singleWord)
+            else:
+                secondRowLetterSize += len(singleWord) + 1
+            secondRow.append(singleWord)
+        else:
+            if(thirdRowLetterSize == 0):
+                thirdRowLetterSize += len(singleWord)
+            else:
+                thirdRowLetterSize += len(singleWord) + 1
+            thirdRow.append(singleWord)
+    size = firstRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (firstRowLetterSize - 1) * SPACE_BETWEEN_LETTERS
+    X_pos = int((WIDTH - size) / 2)
+    for singleWord in firstRow:
+        for char in singleWord:
+            pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, FIRST_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
+            pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, FIRST_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
+            X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
+        X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
+    size = secondRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (secondRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
+    X_pos = int((WIDTH - size) / 2)
+    for singleWord in secondRow:
+        for char in singleWord:
+            pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, SECOND_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
+            pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, SECOND_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
+            X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
+        X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
+    size = thirdRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (thirdRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
+    X_pos = int((WIDTH - size) / 2)
+    for singleWord in thirdRow:
+        for char in singleWord:
+            pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, THIRD_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
+            pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, THIRD_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
+            X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
+        X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
 
 def setPriceForLetter():
     global amount
@@ -134,9 +202,10 @@ def main():
         setGameNameLogo()
         setGameDescription()
         setCategoryText()
-        setTextBox()
+        setWordPuzzle()
         setPriceForLetterText()
         setCurrentBalance()
+        setTextBox()
         pygame.display.update()
     pygame.quit()
 
