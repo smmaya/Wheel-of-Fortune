@@ -1,6 +1,6 @@
 import json
 import pygame
-from random import randint
+from random import choices, randint
 
 pygame.init()
 
@@ -168,7 +168,7 @@ def setWordPuzzle():
 
 def setPriceForLetter():
     global amount
-    amount = AMOUNTS[randint(0, (len(AMOUNTS) - 1))]
+    amount = int(str(choices(AMOUNTS, weights=(70, 60, 50, 40, 30, 20, 10), k=1))[1:-1])
 
 def setPriceForLetterText():
     priceForLetterText = DESCRIPTION_FONT.render(f'Otrzymasz ${str(amount)} za poprawną literę', 1, DESCRIPTION_FONT_COLOR)
