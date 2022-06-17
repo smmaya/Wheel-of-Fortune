@@ -63,7 +63,7 @@ CURRENT_BALANCE_TEXT_POSITION = (int(1010), int(540))
 alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
 
-vowels = ['A', 'E', 'I', 'O', 'U']
+vowels = ['A', 'E', 'I', 'O', 'U', 'Y']
 
 guessedLetters = [str()]
 
