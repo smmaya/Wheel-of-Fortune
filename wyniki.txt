@@ -78,3 +78,4 @@ Sławek 24500
 Adam 11500
 Adam 9750
 Adam 12250
+Cris 26250

@@ -5,80 +5,80 @@ from time import sleep
 
 pygame.init()
 
-WIDTH, HEIGHT = 1280, 720
+WIDTH, HEIGHT = int(1280), int(720)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
-FPS = 60
+FPS = int(60)
 
-BG_COLOR = (44, 62, 80) # R, G, B
+BG_COLOR = (int(44), int(62), int(80)) # R, G, B
 
 MAIN_FONT = pygame.font.SysFont('Lato', 40) # FontFamily, FontSize
-MAIN_FONT_COLOR = (241, 196, 15) # R, G, B
+MAIN_FONT_COLOR = (int(241), int(196), int(15)) # R, G, B
 DESCRIPTION_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
-DESCRIPTION_FONT_COLOR = (52, 152, 219) # R, G, B
+DESCRIPTION_FONT_COLOR = (int(52), int(152), int(219)) # R, G, B
 
-GAME_NAME_LOGO_POSITION = (342, 10) # X, Y      342 because width of welcomeText is 596 -> (1280 - 596) / 2 = 342. This is done on purpose of center the welcomeText
-DESCRIPTION1_POSITION = (158, 60) # X, Y        158 because width of description1 is 964
-DESCRIPTION2_POSITION = (161, 100) # X, Y       161 because width of description1 is 958
-DESCRIPTION3_POSITION = (119, 140) # X, Y       119 because width of description1 is 1041
+GAME_NAME_LOGO_POSITION = (int(342), int(10)) # X, Y      342 because width of welcomeText is 596 -> (1280 - 596) / 2 = 342. This is done on purpose of center the welcomeText
+DESCRIPTION1_POSITION = (int(158), int(60)) # X, Y        158 because width of description1 is 964
+DESCRIPTION2_POSITION = (int(161), int(100)) # X, Y       161 because width of description1 is 958
+DESCRIPTION3_POSITION = (int(119), int(140)) # X, Y       119 because width of description1 is 1041
 
 INPUT_BOX = pygame.Rect(50, 610, 1180, 60) # X, Y, WIDTH, HEIGHT 
-INPUT_BOX_COLOR = (243, 156, 18) # R, G, B
+INPUT_BOX_COLOR = (int(243), int(156), int(18)) # R, G, B
 INPUT_BOX_FILL = pygame.Rect(53, 613, 1174, 54) # X, Y, WIDTH, HEIGHT 
 INPUT_BOX_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
-INPUT_BOX_FONT_COLOR = (41, 128, 185) # R, G, B
-inputBoxText = ''
-INPUT_BOX_TEXT_POSITION = (60, 620) # X, Y
+INPUT_BOX_FONT_COLOR = (int(41), int(128), int(185)) # R, G, B
+inputBoxText = str('')
+INPUT_BOX_TEXT_POSITION = (int(60), int(620)) # X, Y
 
-CATEGORY_TEXT_Y_POSITION = 220
-NUMBER_OF_LETTERS_Y_POSITION = 260
-category: str
-word: str
-numberOfLetters: int
-wordLastLetter: int
-wordTeens: bool
+CATEGORY_TEXT_Y_POSITION = int(220)
+NUMBER_OF_LETTERS_Y_POSITION = int(260)
+category = str()
+word = str()
+numberOfLetters = int()
+wordLastLetter = int()
+wordTeens = bool()
 
-MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW = 23 # Because 1180 (1280 - 50 - 50 = 1180 | 50 is margin on each side) : 50 = 23.6 ~ 23
-SINGLE_LETTER_BOX_WIDTH = 40
-SINGLE_LETTER_BOX_HEIGHT = 60
-SINGLE_LETTER_BOX_FILL_WIDTH = 34
-SINGLE_LETTER_BOX_FILL_HEIGHT = 54
-SPACE_BETWEEN_LETTERS = 10
-FIRST_ROW_BOX_Y_POS = 310
-FIRST_ROW_BOX_FILL_Y_POS = 313
-SECOND_ROW_BOX_Y_POS = 380
-SECOND_ROW_BOX_FILL_Y_POS = 383
-THIRD_ROW_BOX_Y_POS = 450
-THIRD_ROW_BOX_FILL_Y_POS = 453
+MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW = int(23) # Because 1180 (1280 - 50 - 50 = 1180 | 50 is margin on each side) : 50 = 23.6 ~ 23
+SINGLE_LETTER_BOX_WIDTH = int(40)
+SINGLE_LETTER_BOX_HEIGHT = int(60)
+SINGLE_LETTER_BOX_FILL_WIDTH = int(34)
+SINGLE_LETTER_BOX_FILL_HEIGHT = int(54)
+SPACE_BETWEEN_LETTERS = int(10)
+FIRST_ROW_BOX_Y_POS = int(310)
+FIRST_ROW_BOX_FILL_Y_POS = int(313)
+SECOND_ROW_BOX_Y_POS = int(380)
+SECOND_ROW_BOX_FILL_Y_POS = int(383)
+THIRD_ROW_BOX_Y_POS = int(450)
+THIRD_ROW_BOX_FILL_Y_POS = int(453)
 COMMA_FONT = pygame.font.SysFont('Lato', 60) # FontFamily, FontSize
 
-amount: int
-PRICE_FOR_LETTER_TEXT_POSITION = (50, 540)
+amount = int()
+PRICE_FOR_LETTER_TEXT_POSITION = (int(50), int(540))
 
-balance = 0
-BALANCE_DESCRIPTION_TEXT_POSITION = (850, 540)
+balance = int(0)
+BALANCE_DESCRIPTION_TEXT_POSITION = (int(850), int(540))
 CURRENT_BALANCE_BOX = pygame.Rect(1000, 530, 230, 60)
 CURRENT_BALANCE_BOX_FILL = pygame.Rect(1003, 533, 224, 54)
-CURRENT_BALANCE_TEXT_POSITION = (1010, 540)
+CURRENT_BALANCE_TEXT_POSITION = (int(1010), int(540))
 
 alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
 
 vowels = ['A', 'E', 'I', 'O', 'U']
 
-guessedLetters = []
+guessedLetters = [str()]
 
 error_message_type = int(0)
 ERROR_MESSAGE_FONT = DESCRIPTION_FONT
-ERROR_MESSAGE_FONT_COLOR = (192, 57, 43)
-ERROR_MESSAGE_Y_POS = 620
+ERROR_MESSAGE_FONT_COLOR = (int(192), int(57), int(43))
+ERROR_MESSAGE_Y_POS = int(620)
 
 bingo = False
 
 WIN_MESSAGE_FONT = DESCRIPTION_FONT
-WIN_MESSAGE_FONT_COLOR = (39, 174, 96)
+WIN_MESSAGE_FONT_COLOR = (int(39), int(174), int(96))
 WIN_MESSAGE_Y_POS = ERROR_MESSAGE_Y_POS
 
-win = False
+win = bool(False)
 
 with open('kategorie.json', 'r', encoding='utf-8') as file:
     content = json.loads(file.read())
@@ -98,10 +98,10 @@ def setNotConstantVariables():
     balance = int(0)
     alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     vowels = ['A', 'E', 'I', 'O', 'U']
-    guessedLetters = []
+    guessedLetters = [str()]
     error_message_type = int(0)
-    bingo = False
-    win = False
+    bingo = bool(False)
+    win = bool(False)
 
 def setBackground():
     WINDOW.fill(BG_COLOR)
@@ -144,16 +144,16 @@ def setCategoryText():
 def setWordPuzzle():
     global word
     words = word.split()
-    isFirstFull, isSecondFull = False, False
+    isFirstFull, isSecondFull = bool(False), bool(False)
     firstRowLetterSize, secondRowLetterSize, thirdRowLetterSize = int(0), int(0), int(0)
-    firstRow, secondRow, thirdRow = list[str](), list[str](), list[str]()
+    firstRow, secondRow, thirdRow = [str()], [str()], [str()]
     for singleWord in words:
         if(isFirstFull == False):
             if(firstRowLetterSize + len(singleWord) + 1 > MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW):
-                isFirstFull = True
+                isFirstFull = bool(True)
         elif(isSecondFull == False):
             if(secondRowLetterSize + len(singleWord) + 1 > MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW):
-                isSecondFull = True
+                isSecondFull = bool(True)
         if(isFirstFull == False):
             if(firstRowLetterSize == 0):
                 firstRowLetterSize += len(singleWord)
@@ -183,6 +183,8 @@ def setWordPuzzle():
             if(char in guessedLetters):
                 if(char == 'M'):
                     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, FIRST_ROW_BOX_Y_POS + 10))
+                elif(char == "O"):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, FIRST_ROW_BOX_Y_POS + 10))
                 elif(char == 'I'):
                     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, FIRST_ROW_BOX_Y_POS + 10))
                 else:
@@ -200,6 +202,8 @@ def setWordPuzzle():
             if(char in guessedLetters):
                 if(char == 'M'):
                     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, SECOND_ROW_BOX_Y_POS + 10))
+                elif(char == "O"):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, SECOND_ROW_BOX_Y_POS + 10))
                 elif(char == 'I'):
                     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, SECOND_ROW_BOX_Y_POS + 10))
                 else:
@@ -217,6 +221,8 @@ def setWordPuzzle():
             if(char in guessedLetters):
                 if(char == 'M'):
                     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, THIRD_ROW_BOX_Y_POS + 10))
+                elif(char == "O"):
+                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, THIRD_ROW_BOX_Y_POS + 10)) 
                 elif(char == 'I'):
                     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, THIRD_ROW_BOX_Y_POS + 10))
                 else:
@@ -280,37 +286,41 @@ def main():
     setPriceForLetter()
     pygame.display.set_caption("NIEKoło NIEfortuny")
     clock = pygame.time.Clock()
-    run = True
+    run = bool(True)
     while(run):
         clock.tick(FPS)
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
-                run = False
+                run = bool(False)
             if(event.type == pygame.KEYDOWN):
-                error_message_type = '0'
+                error_message_type = int(0)
                 if(event.key == pygame.K_BACKSPACE):
                     inputBoxText = inputBoxText[:-1]
                 elif(event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
-                    inputBoxText = inputBoxText.upper()
+                    inputBoxText = str(inputBoxText.upper())
                     if(bingo):
                         if(inputBoxText == word):
-                            win = True
-                            inputBoxText = ''
+                            for letter in inputBoxText:
+                                if(letter not in guessedLetters):
+                                    guessedLetters.append(letter)
+                            win = bool(True)
+                            inputBoxText = str('')
                             break
                         else:
-                            bingo = False
-                            error_message_type = 3
+                            bingo = bool(False)
+                            error_message_type = int(3)
                     elif(inputBoxText == 'BINGO'):
-                        bingo = True
+                        bingo = bool(True)
                     elif(inputBoxText not in alphabet):
-                        error_message_type = 1
+                        error_message_type = int(1)
                         setPriceForLetter()
                     elif(inputBoxText in vowels):
                         if(balance >= 500):
-                            alphabet.remove(inputBoxText)
+                            alphabet.remove(inputBoxText)                            
+                            guessedLetters.append(inputBoxText)
                             balance -= 500
                         else:
-                            error_message_type = 2
+                            error_message_type = int(2)
                         setPriceForLetter()
                     else:
                         alphabet.remove(inputBoxText)
@@ -319,9 +329,9 @@ def main():
                             if word[char] == inputBoxText:
                                 balance += amount
                         setPriceForLetter()
-                    inputBoxText = ''
+                    inputBoxText = str('')
                 else:
-                    inputBoxText += event.unicode    
+                    inputBoxText += str(event.unicode)
         setBackground()
         setGameNameLogo()
         setGameDescription()
@@ -340,16 +350,16 @@ def main():
         clock.tick(FPS)
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
-                run = False
+                run = bool(False)
             if(event.type == pygame.KEYDOWN):
                 if(event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
-                    inputBoxText = inputBoxText.upper()
+                    inputBoxText = str(inputBoxText.upper())
                     if(inputBoxText == "TAK"):
                         return True
                     else:
                         return False
                 else:
-                    inputBoxText += event.unicode
+                    inputBoxText += str(event.unicode)
         setBackground()
         setGameNameLogo()
         setGameDescription()
@@ -363,8 +373,8 @@ def main():
     pygame.quit()
 
 if __name__ == "__main__":
-    run = True
+    run = bool(True)
     while(run):
-        run = main()
+        run = bool(main())
     pygame.quit()
         
