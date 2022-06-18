@@ -142,11 +142,12 @@ def setCategoryText():
     WINDOW.blit(numberOfLettersText, (numberOfLetters_text_x_position, NUMBER_OF_LETTERS_Y_POSITION))
 
 def setWordPuzzle():
-    global word
+    global word, win
     words = word.split()
     isFirstFull, isSecondFull = bool(False), bool(False)
     firstRowLetterSize, secondRowLetterSize, thirdRowLetterSize = int(0), int(0), int(0)
     firstRow, secondRow, thirdRow = list[str](), list[str](), list[str]()
+    wholeWordGuessed = bool(True)
     for singleWord in words:
         if(isFirstFull == False):
             if(firstRowLetterSize + len(singleWord) + 1 > MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW):
@@ -184,14 +185,8 @@ def setWordPuzzle():
                 letter = INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR)
                 letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
                 WINDOW.blit(letter, (letterXPos, FIRST_ROW_BOX_Y_POS + 10))
-                # if(char == 'M'):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, FIRST_ROW_BOX_Y_POS + 10))
-                # elif(char == "O"):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, FIRST_ROW_BOX_Y_POS + 10))
-                # elif(char == 'I'):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, FIRST_ROW_BOX_Y_POS + 10))
-                # else:
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS + 10))
+            else:
+                wholeWordGuessed = bool(False)
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = secondRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (secondRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -206,14 +201,8 @@ def setWordPuzzle():
                 letter = INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR)
                 letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
                 WINDOW.blit(letter, (letterXPos, SECOND_ROW_BOX_Y_POS + 10))
-                # if(char == 'M'):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, SECOND_ROW_BOX_Y_POS + 10))
-                # elif(char == "O"):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, SECOND_ROW_BOX_Y_POS + 10))
-                # elif(char == 'I'):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, SECOND_ROW_BOX_Y_POS + 10))
-                # else:
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS + 10))
+            else:
+                wholeWordGuessed = bool(False)
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = thirdRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (thirdRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -228,16 +217,12 @@ def setWordPuzzle():
                 letter = INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR)
                 letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
                 WINDOW.blit(letter, (letterXPos, THIRD_ROW_BOX_Y_POS + 10))
-                # if(char == 'M'):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, THIRD_ROW_BOX_Y_POS + 10))
-                # elif(char == "O"):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, THIRD_ROW_BOX_Y_POS + 10)) 
-                # elif(char == 'I'):
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, THIRD_ROW_BOX_Y_POS + 10))
-                # else:
-                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS + 10))
+            else:
+                wholeWordGuessed = bool(False)
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
+    if(wholeWordGuessed):
+        win = bool(True)
 
 def setPriceForLetter():
     global amount
