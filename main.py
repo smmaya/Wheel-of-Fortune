@@ -9,12 +9,12 @@ WIDTH, HEIGHT = int(1280), int(720)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 FPS = int(60)
 
-BG_COLOR = (int(44), int(62), int(80)) # R, G, B
+BG_COLOR = (int(30), int(39), int(46)) # R, G, B
 
 MAIN_FONT = pygame.font.SysFont('Lato', 40) # FontFamily, FontSize
-MAIN_FONT_COLOR = (int(241), int(196), int(15)) # R, G, B
+MAIN_FONT_COLOR = (int(255), int(192), int(72)) # R, G, B
 DESCRIPTION_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
-DESCRIPTION_FONT_COLOR = (int(52), int(152), int(219)) # R, G, B
+DESCRIPTION_FONT_COLOR = (int(52), int(231), int(228)) # R, G, B
 
 GAME_NAME_LOGO_POSITION = (int(342), int(10)) # X, Y      342 because width of welcomeText is 596 -> (1280 - 596) / 2 = 342. This is done on purpose of center the welcomeText
 DESCRIPTION1_POSITION = (int(158), int(60)) # X, Y        158 because width of description1 is 964
@@ -22,10 +22,10 @@ DESCRIPTION2_POSITION = (int(161), int(100)) # X, Y       161 because width of d
 DESCRIPTION3_POSITION = (int(119), int(140)) # X, Y       119 because width of description1 is 1041
 
 INPUT_BOX = pygame.Rect(50, 610, 1180, 60) # X, Y, WIDTH, HEIGHT 
-INPUT_BOX_COLOR = (int(243), int(156), int(18)) # R, G, B
+INPUT_BOX_COLOR = (int(255), int(168), int(1)) # R, G, B
 INPUT_BOX_FILL = pygame.Rect(53, 613, 1174, 54) # X, Y, WIDTH, HEIGHT 
 INPUT_BOX_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
-INPUT_BOX_FONT_COLOR = (int(41), int(128), int(185)) # R, G, B
+INPUT_BOX_FONT_COLOR = (int(0), int(216), int(214)) # R, G, B
 inputBoxText = str('')
 INPUT_BOX_TEXT_POSITION = (int(60), int(620)) # X, Y
 
@@ -65,17 +65,17 @@ alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', '�
 
 vowels = ['A', 'E', 'I', 'O', 'U', 'Y']
 
-guessedLetters = [str()]
+guessedLetters = list[str]()
 
 error_message_type = int(0)
 ERROR_MESSAGE_FONT = DESCRIPTION_FONT
-ERROR_MESSAGE_FONT_COLOR = (int(192), int(57), int(43))
+ERROR_MESSAGE_FONT_COLOR = (int(245), int(59), int(87))
 ERROR_MESSAGE_Y_POS = int(620)
 
 bingo = False
 
 WIN_MESSAGE_FONT = DESCRIPTION_FONT
-WIN_MESSAGE_FONT_COLOR = (int(39), int(174), int(96))
+WIN_MESSAGE_FONT_COLOR = (int(11), int(232), int(129))
 WIN_MESSAGE_Y_POS = ERROR_MESSAGE_Y_POS
 
 win = bool(False)
@@ -98,7 +98,7 @@ def setNotConstantVariables():
     balance = int(0)
     alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     vowels = ['A', 'E', 'I', 'O', 'U']
-    guessedLetters = [str()]
+    guessedLetters = list[str]()
     error_message_type = int(0)
     bingo = bool(False)
     win = bool(False)
@@ -107,13 +107,13 @@ def setBackground():
     WINDOW.fill(BG_COLOR)
 
 def setGameNameLogo():
-    welcomeText = MAIN_FONT.render('Witamy w grze "NIEKoło NIEfortuny"', 1, MAIN_FONT_COLOR)
+    welcomeText = MAIN_FONT.render('Witamy w grze "NIEkoło NIEfortuny"', True, MAIN_FONT_COLOR)
     WINDOW.blit(welcomeText, GAME_NAME_LOGO_POSITION)
 
 def setGameDescription():
-    description1 = DESCRIPTION_FONT.render('Zgaduj po jednej literze na raz. Aby kupić samogłoskę, musisz mieć $500.', 1, DESCRIPTION_FONT_COLOR)
-    description2 = DESCRIPTION_FONT.render('Jeśli sądzisz, że znasz całe słowo lub zdanie, wpisz \'bingo\' i wciśnij enter.', 1, DESCRIPTION_FONT_COLOR)
-    description3 = DESCRIPTION_FONT.render('Następnie podaj słowo lub zdanie. Otrzymasz wtedy wartość każdej spółgłoski', 1, DESCRIPTION_FONT_COLOR)
+    description1 = DESCRIPTION_FONT.render('Zgaduj po jednej literze na raz. Aby kupić samogłoskę, musisz mieć $500.', True, DESCRIPTION_FONT_COLOR)
+    description2 = DESCRIPTION_FONT.render('Jeśli sądzisz, że znasz całe słowo lub zdanie, wpisz \'bingo\' i wciśnij enter.', True, DESCRIPTION_FONT_COLOR)
+    description3 = DESCRIPTION_FONT.render('Następnie podaj słowo lub zdanie. Otrzymasz wtedy wartość każdej spółgłoski', True, DESCRIPTION_FONT_COLOR)
     WINDOW.blit(description1, DESCRIPTION1_POSITION)
     WINDOW.blit(description2, DESCRIPTION2_POSITION)
     WINDOW.blit(description3, DESCRIPTION3_POSITION)
@@ -128,25 +128,26 @@ def setCategory():
     wordTeens = numberOfLetters not in range(5, 22)
 
 def setCategoryText():
-    categoryText = DESCRIPTION_FONT.render(f'Kategoria: {category}', 1, DESCRIPTION_FONT_COLOR)
+    categoryText = DESCRIPTION_FONT.render(f'Kategoria: {category}', True, DESCRIPTION_FONT_COLOR)
     category_text_x_position = (WIDTH - categoryText.get_size()[0]) / 2
     numberOfLettersText: pygame.Surface
     if(numberOfLetters in range(2, 5) or wordLastLetter == 2 and wordTeens \
         or wordLastLetter == 3 and wordTeens \
         or wordLastLetter == 4 and wordTeens):
-        numberOfLettersText = DESCRIPTION_FONT.render(f'Na {numberOfLetters} litery', 1, DESCRIPTION_FONT_COLOR)
+        numberOfLettersText = DESCRIPTION_FONT.render(f'Na {numberOfLetters} litery', True, DESCRIPTION_FONT_COLOR)
     else:
-        numberOfLettersText = DESCRIPTION_FONT.render(f'Na {numberOfLetters} liter', 1, DESCRIPTION_FONT_COLOR)
+        numberOfLettersText = DESCRIPTION_FONT.render(f'Na {numberOfLetters} liter', True, DESCRIPTION_FONT_COLOR)
     numberOfLetters_text_x_position = (WIDTH - numberOfLettersText.get_size()[0]) /2    
     WINDOW.blit(categoryText, (category_text_x_position, CATEGORY_TEXT_Y_POSITION))
     WINDOW.blit(numberOfLettersText, (numberOfLetters_text_x_position, NUMBER_OF_LETTERS_Y_POSITION))
 
 def setWordPuzzle():
-    global word
+    global word, win
     words = word.split()
     isFirstFull, isSecondFull = bool(False), bool(False)
     firstRowLetterSize, secondRowLetterSize, thirdRowLetterSize = int(0), int(0), int(0)
-    firstRow, secondRow, thirdRow = [str()], [str()], [str()]
+    firstRow, secondRow, thirdRow = list[str](), list[str](), list[str]()
+    wholeWordGuessed = bool(True)
     for singleWord in words:
         if(isFirstFull == False):
             if(firstRowLetterSize + len(singleWord) + 1 > MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW):
@@ -179,16 +180,13 @@ def setWordPuzzle():
             pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, FIRST_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, FIRST_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
             if(char == ','):
-                WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS - 15))
+                WINDOW.blit(COMMA_FONT.render(char, True, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS - 15))
             if(char in guessedLetters):
-                if(char == 'M'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, FIRST_ROW_BOX_Y_POS + 10))
-                elif(char == "O"):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, FIRST_ROW_BOX_Y_POS + 10))
-                elif(char == 'I'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, FIRST_ROW_BOX_Y_POS + 10))
-                else:
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS + 10))
+                letter = INPUT_BOX_FONT.render(char, True, INPUT_BOX_FONT_COLOR)
+                letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
+                WINDOW.blit(letter, (letterXPos, FIRST_ROW_BOX_Y_POS + 10))
+            else:
+                wholeWordGuessed = bool(False)
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = secondRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (secondRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -198,16 +196,13 @@ def setWordPuzzle():
             pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, SECOND_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, SECOND_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
             if(char == ','):
-                WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS - 15))
+                WINDOW.blit(COMMA_FONT.render(char, True, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS - 15))
             if(char in guessedLetters):
-                if(char == 'M'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, SECOND_ROW_BOX_Y_POS + 10))
-                elif(char == "O"):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, SECOND_ROW_BOX_Y_POS + 10))
-                elif(char == 'I'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, SECOND_ROW_BOX_Y_POS + 10))
-                else:
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS + 10))
+                letter = INPUT_BOX_FONT.render(char, True, INPUT_BOX_FONT_COLOR)
+                letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
+                WINDOW.blit(letter, (letterXPos, SECOND_ROW_BOX_Y_POS + 10))
+            else:
+                wholeWordGuessed = bool(False)
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = thirdRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (thirdRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -217,65 +212,64 @@ def setWordPuzzle():
             pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, pygame.Rect(X_pos, THIRD_ROW_BOX_Y_POS, SINGLE_LETTER_BOX_WIDTH, SINGLE_LETTER_BOX_HEIGHT))
             pygame.draw.rect(WINDOW, BG_COLOR, pygame.Rect(X_pos + 3, THIRD_ROW_BOX_FILL_Y_POS, SINGLE_LETTER_BOX_FILL_WIDTH, SINGLE_LETTER_BOX_FILL_HEIGHT))
             if(char == ','):
-                WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS - 15))
+                WINDOW.blit(COMMA_FONT.render(char, True, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS - 15))
             if(char in guessedLetters):
-                if(char == 'M'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, THIRD_ROW_BOX_Y_POS + 10))
-                elif(char == "O"):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, THIRD_ROW_BOX_Y_POS + 10)) 
-                elif(char == 'I'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, THIRD_ROW_BOX_Y_POS + 10))
-                else:
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS + 10))
+                letter = INPUT_BOX_FONT.render(char, True, INPUT_BOX_FONT_COLOR)
+                letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
+                WINDOW.blit(letter, (letterXPos, THIRD_ROW_BOX_Y_POS + 10))
+            else:
+                wholeWordGuessed = bool(False)
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
+    if(wholeWordGuessed):
+        win = bool(True)
 
 def setPriceForLetter():
     global amount
     amount = int(str(choices(AMOUNTS, weights=(70, 60, 50, 40, 30, 20, 10), k=1))[1:-1])
 
 def setPriceForLetterText():
-    priceForLetterText = DESCRIPTION_FONT.render(f'Otrzymasz ${str(amount)} za poprawną literę', 1, DESCRIPTION_FONT_COLOR)
+    priceForLetterText = DESCRIPTION_FONT.render(f'Otrzymasz ${str(amount)} za poprawną literę', True, DESCRIPTION_FONT_COLOR)
     WINDOW.blit(priceForLetterText, PRICE_FOR_LETTER_TEXT_POSITION)  
 
 def setCurrentBalance():
     pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, CURRENT_BALANCE_BOX)
     pygame.draw.rect(WINDOW, BG_COLOR, CURRENT_BALANCE_BOX_FILL)
-    balanceDescriptionText = DESCRIPTION_FONT.render('Posiadasz', 1, DESCRIPTION_FONT_COLOR)
-    currentBalanceText = INPUT_BOX_FONT.render(f'${balance}', 1, INPUT_BOX_FONT_COLOR)
+    balanceDescriptionText = DESCRIPTION_FONT.render('Posiadasz', True, DESCRIPTION_FONT_COLOR)
+    currentBalanceText = INPUT_BOX_FONT.render(f'${balance}', True, INPUT_BOX_FONT_COLOR)
     WINDOW.blit(balanceDescriptionText, BALANCE_DESCRIPTION_TEXT_POSITION)
     WINDOW.blit(currentBalanceText, CURRENT_BALANCE_TEXT_POSITION)
 
 def setTextBox():
     pygame.draw.rect(WINDOW, INPUT_BOX_COLOR, INPUT_BOX)
     pygame.draw.rect(WINDOW, BG_COLOR, INPUT_BOX_FILL)
-    textBoxContent = INPUT_BOX_FONT.render(inputBoxText, 1, INPUT_BOX_FONT_COLOR)
+    textBoxContent = INPUT_BOX_FONT.render(inputBoxText, True, INPUT_BOX_FONT_COLOR)
     WINDOW.blit(textBoxContent, INPUT_BOX_TEXT_POSITION)
 
 def setErrorMessageBox():
     if(error_message_type == 0):
         return
     elif(error_message_type == 1):
-        errorMessage = ERROR_MESSAGE_FONT.render('Już użyłeś/aś tej litery!', 1, ERROR_MESSAGE_FONT_COLOR)
+        errorMessage = ERROR_MESSAGE_FONT.render('Już użyłeś/aś tej litery!', True, ERROR_MESSAGE_FONT_COLOR)
         errorMessage_X_Pos = (WIDTH - errorMessage.get_size()[0]) /2
         WINDOW.blit(errorMessage, (errorMessage_X_Pos, ERROR_MESSAGE_Y_POS))
     elif(error_message_type == 2):
-        errorMessage = ERROR_MESSAGE_FONT.render('Za mało pieniędzy!', 1, ERROR_MESSAGE_FONT_COLOR)
+        errorMessage = ERROR_MESSAGE_FONT.render('Za mało pieniędzy!', True, ERROR_MESSAGE_FONT_COLOR)
         errorMessage_X_Pos = (WIDTH - errorMessage.get_size()[0]) /2
         WINDOW.blit(errorMessage, (errorMessage_X_Pos, ERROR_MESSAGE_Y_POS))
     elif(error_message_type == 3):
-        errorMessage = ERROR_MESSAGE_FONT.render('Niestety nie, to nie jest dobra odpowiedź!', 1, ERROR_MESSAGE_FONT_COLOR)
+        errorMessage = ERROR_MESSAGE_FONT.render('Niestety nie, to nie jest dobra odpowiedź!', True, ERROR_MESSAGE_FONT_COLOR)
         errorMessage_X_Pos = (WIDTH - errorMessage.get_size()[0]) /2
         WINDOW.blit(errorMessage, (errorMessage_X_Pos, ERROR_MESSAGE_Y_POS))
 
 def setWinMessage():
     if(win):
-        winMessage = WIN_MESSAGE_FONT.render(f'Brawo! Twoja wygrana: ${str(balance)}', 1, WIN_MESSAGE_FONT_COLOR)
+        winMessage = WIN_MESSAGE_FONT.render(f'Brawo! Twoja wygrana: ${str(balance)}', True, WIN_MESSAGE_FONT_COLOR)
         winMessage_X_Pos = (WIDTH - winMessage.get_size()[0]) /2
         WINDOW.blit(winMessage, (winMessage_X_Pos, WIN_MESSAGE_Y_POS))
 
-def playAgainMessage():
-    playAgain = WIN_MESSAGE_FONT.render(f'Aby zagrać ponownie, wpisz "TAK"', 1, WIN_MESSAGE_FONT_COLOR)
+def setPlayAgainMessage():
+    playAgain = WIN_MESSAGE_FONT.render(f'Aby zagrać ponownie, wpisz "TAK"', True, WIN_MESSAGE_FONT_COLOR)
     playAgain_X_Pos = (WIDTH - playAgain.get_size()[0]) /2
     WINDOW.blit(playAgain, (playAgain_X_Pos, WIN_MESSAGE_Y_POS))
 
@@ -368,7 +362,7 @@ def main():
         setPriceForLetterText()
         setCurrentBalance()
         setTextBox()
-        playAgainMessage()    
+        setPlayAgainMessage()    
         pygame.display.update()
     pygame.quit()
 
