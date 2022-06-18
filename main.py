@@ -9,12 +9,12 @@ WIDTH, HEIGHT = int(1280), int(720)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 FPS = int(60)
 
-BG_COLOR = (int(44), int(62), int(80)) # R, G, B
+BG_COLOR = (int(30), int(39), int(46)) # R, G, B
 
 MAIN_FONT = pygame.font.SysFont('Lato', 40) # FontFamily, FontSize
-MAIN_FONT_COLOR = (int(241), int(196), int(15)) # R, G, B
+MAIN_FONT_COLOR = (int(255), int(192), int(72)) # R, G, B
 DESCRIPTION_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
-DESCRIPTION_FONT_COLOR = (int(52), int(152), int(219)) # R, G, B
+DESCRIPTION_FONT_COLOR = (int(52), int(231), int(228)) # R, G, B
 
 GAME_NAME_LOGO_POSITION = (int(342), int(10)) # X, Y      342 because width of welcomeText is 596 -> (1280 - 596) / 2 = 342. This is done on purpose of center the welcomeText
 DESCRIPTION1_POSITION = (int(158), int(60)) # X, Y        158 because width of description1 is 964
@@ -22,10 +22,10 @@ DESCRIPTION2_POSITION = (int(161), int(100)) # X, Y       161 because width of d
 DESCRIPTION3_POSITION = (int(119), int(140)) # X, Y       119 because width of description1 is 1041
 
 INPUT_BOX = pygame.Rect(50, 610, 1180, 60) # X, Y, WIDTH, HEIGHT 
-INPUT_BOX_COLOR = (int(243), int(156), int(18)) # R, G, B
+INPUT_BOX_COLOR = (int(255), int(168), int(1)) # R, G, B
 INPUT_BOX_FILL = pygame.Rect(53, 613, 1174, 54) # X, Y, WIDTH, HEIGHT 
 INPUT_BOX_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
-INPUT_BOX_FONT_COLOR = (int(41), int(128), int(185)) # R, G, B
+INPUT_BOX_FONT_COLOR = (int(0), int(216), int(214)) # R, G, B
 inputBoxText = str('')
 INPUT_BOX_TEXT_POSITION = (int(60), int(620)) # X, Y
 
@@ -69,13 +69,13 @@ guessedLetters = list[str]()
 
 error_message_type = int(0)
 ERROR_MESSAGE_FONT = DESCRIPTION_FONT
-ERROR_MESSAGE_FONT_COLOR = (int(192), int(57), int(43))
+ERROR_MESSAGE_FONT_COLOR = (int(245), int(59), int(87))
 ERROR_MESSAGE_Y_POS = int(620)
 
 bingo = False
 
 WIN_MESSAGE_FONT = DESCRIPTION_FONT
-WIN_MESSAGE_FONT_COLOR = (int(39), int(174), int(96))
+WIN_MESSAGE_FONT_COLOR = (int(11), int(232), int(129))
 WIN_MESSAGE_Y_POS = ERROR_MESSAGE_Y_POS
 
 win = bool(False)
@@ -107,7 +107,7 @@ def setBackground():
     WINDOW.fill(BG_COLOR)
 
 def setGameNameLogo():
-    welcomeText = MAIN_FONT.render('Witamy w grze "NIEKoło NIEfortuny"', 1, MAIN_FONT_COLOR)
+    welcomeText = MAIN_FONT.render('Witamy w grze "NIEkoło NIEfortuny"', 1, MAIN_FONT_COLOR)
     WINDOW.blit(welcomeText, GAME_NAME_LOGO_POSITION)
 
 def setGameDescription():
@@ -268,7 +268,7 @@ def setWinMessage():
         winMessage_X_Pos = (WIDTH - winMessage.get_size()[0]) /2
         WINDOW.blit(winMessage, (winMessage_X_Pos, WIN_MESSAGE_Y_POS))
 
-def playAgainMessage():
+def setPlayAgainMessage():
     playAgain = WIN_MESSAGE_FONT.render(f'Aby zagrać ponownie, wpisz "TAK"', 1, WIN_MESSAGE_FONT_COLOR)
     playAgain_X_Pos = (WIDTH - playAgain.get_size()[0]) /2
     WINDOW.blit(playAgain, (playAgain_X_Pos, WIN_MESSAGE_Y_POS))
@@ -362,7 +362,7 @@ def main():
         setPriceForLetterText()
         setCurrentBalance()
         setTextBox()
-        playAgainMessage()    
+        setPlayAgainMessage()    
         pygame.display.update()
     pygame.quit()
 
