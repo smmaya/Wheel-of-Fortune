@@ -79,3 +79,6 @@ Adam 11500
 Adam 9750
 Adam 12250
 Cris 26250
+Adam 3000
+Adam 2500
+Adam 6500
