@@ -65,7 +65,7 @@ alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', '�
 
 vowels = ['A', 'E', 'I', 'O', 'U', 'Y']
 
-guessedLetters = [str()]
+guessedLetters = list[str]()
 
 error_message_type = int(0)
 ERROR_MESSAGE_FONT = DESCRIPTION_FONT
@@ -98,7 +98,7 @@ def setNotConstantVariables():
     balance = int(0)
     alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     vowels = ['A', 'E', 'I', 'O', 'U']
-    guessedLetters = [str()]
+    guessedLetters = list[str]()
     error_message_type = int(0)
     bingo = bool(False)
     win = bool(False)
@@ -146,7 +146,7 @@ def setWordPuzzle():
     words = word.split()
     isFirstFull, isSecondFull = bool(False), bool(False)
     firstRowLetterSize, secondRowLetterSize, thirdRowLetterSize = int(0), int(0), int(0)
-    firstRow, secondRow, thirdRow = [str()], [str()], [str()]
+    firstRow, secondRow, thirdRow = list[str](), list[str](), list[str]()
     for singleWord in words:
         if(isFirstFull == False):
             if(firstRowLetterSize + len(singleWord) + 1 > MAX_NUMBER_OF_LETTER_IN_SINGLE_ROW):
@@ -181,14 +181,17 @@ def setWordPuzzle():
             if(char == ','):
                 WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS - 15))
             if(char in guessedLetters):
-                if(char == 'M'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, FIRST_ROW_BOX_Y_POS + 10))
-                elif(char == "O"):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, FIRST_ROW_BOX_Y_POS + 10))
-                elif(char == 'I'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, FIRST_ROW_BOX_Y_POS + 10))
-                else:
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS + 10))
+                letter = INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR)
+                letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
+                WINDOW.blit(letter, (letterXPos, FIRST_ROW_BOX_Y_POS + 10))
+                # if(char == 'M'):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, FIRST_ROW_BOX_Y_POS + 10))
+                # elif(char == "O"):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, FIRST_ROW_BOX_Y_POS + 10))
+                # elif(char == 'I'):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, FIRST_ROW_BOX_Y_POS + 10))
+                # else:
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, FIRST_ROW_BOX_Y_POS + 10))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = secondRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (secondRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -200,14 +203,17 @@ def setWordPuzzle():
             if(char == ','):
                 WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS - 15))
             if(char in guessedLetters):
-                if(char == 'M'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, SECOND_ROW_BOX_Y_POS + 10))
-                elif(char == "O"):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, SECOND_ROW_BOX_Y_POS + 10))
-                elif(char == 'I'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, SECOND_ROW_BOX_Y_POS + 10))
-                else:
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS + 10))
+                letter = INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR)
+                letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
+                WINDOW.blit(letter, (letterXPos, SECOND_ROW_BOX_Y_POS + 10))
+                # if(char == 'M'):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, SECOND_ROW_BOX_Y_POS + 10))
+                # elif(char == "O"):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, SECOND_ROW_BOX_Y_POS + 10))
+                # elif(char == 'I'):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, SECOND_ROW_BOX_Y_POS + 10))
+                # else:
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, SECOND_ROW_BOX_Y_POS + 10))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
     size = thirdRowLetterSize * SINGLE_LETTER_BOX_WIDTH + (thirdRowLetterSize - 1) * SPACE_BETWEEN_LETTERS 
@@ -219,14 +225,17 @@ def setWordPuzzle():
             if(char == ','):
                 WINDOW.blit(COMMA_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS - 15))
             if(char in guessedLetters):
-                if(char == 'M'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, THIRD_ROW_BOX_Y_POS + 10))
-                elif(char == "O"):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, THIRD_ROW_BOX_Y_POS + 10)) 
-                elif(char == 'I'):
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, THIRD_ROW_BOX_Y_POS + 10))
-                else:
-                    WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS + 10))
+                letter = INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR)
+                letterXPos = int(X_pos + (((34 - letter.get_size()[0]) / 2) + 3))
+                WINDOW.blit(letter, (letterXPos, THIRD_ROW_BOX_Y_POS + 10))
+                # if(char == 'M'):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 6, THIRD_ROW_BOX_Y_POS + 10))
+                # elif(char == "O"):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 8, THIRD_ROW_BOX_Y_POS + 10)) 
+                # elif(char == 'I'):
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 15, THIRD_ROW_BOX_Y_POS + 10))
+                # else:
+                #     WINDOW.blit(INPUT_BOX_FONT.render(char, 1, INPUT_BOX_FONT_COLOR), (X_pos + 10, THIRD_ROW_BOX_Y_POS + 10))
             X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
         X_pos += SINGLE_LETTER_BOX_WIDTH + SPACE_BETWEEN_LETTERS
 
