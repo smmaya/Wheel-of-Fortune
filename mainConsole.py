@@ -3,7 +3,6 @@ import os
 import random
 import re
 import sys
-from random import randint
 
 # Zasady
 player = input('Podaj swoje imię: ')
@@ -28,7 +27,7 @@ with open("kategorie.json", "r", encoding='utf-8') as scan:
     content = json.loads(scan.read())
 # Losowy wybór kategorii
 categories = content['kategorie']
-category = randint(0, len(categories)-1)
+category = random.randint(0, len(categories) - 1)
 # Wypisz kategorię
 print('Kategoria:', str(list(categories[category])[0]).upper())
 # Losowy wybór słowa lub zdania
