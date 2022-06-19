@@ -81,6 +81,10 @@ WIN_MESSAGE_FONT = DESCRIPTION_FONT
 WIN_MESSAGE_FONT_COLOR = (int(11), int(232), int(129))
 WIN_MESSAGE_Y_POS = ERROR_MESSAGE_Y_POS
 
+GIVE_NAME_FONT = DESCRIPTION_FONT
+GIVE_NAME_FONT_COLOR = WIN_MESSAGE_FONT_COLOR
+GIVE_NAME_Y_POS = int(450)
+
 win = bool(False)
 
 MAIN_MENU_PLAY_BUTTON = pygame.Rect(490, 100, 300, 60)      # X, Y, WIDTH, HEIGHT
@@ -300,6 +304,11 @@ def setPlayAgainMessage():
     playAgainXPos = (WIDTH - playAgain.get_size()[0]) /2
     WINDOW.blit(playAgain, (playAgainXPos, WIN_MESSAGE_Y_POS))
 
+def setWriteNameMessage():
+    giveName = GIVE_NAME_FONT.render('Podaj swoje imię', True, GIVE_NAME_FONT_COLOR)
+    giveNameXPos = (WIDTH - giveName.get_size()[0]) / 2
+    WINDOW.blit(giveName, (giveNameXPos, GIVE_NAME_Y_POS))
+
 def setMainMenuButtons(mousePos: Tuple[int, int]):
     if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 100 and mousePos[1] <= 160):
         pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_HOVER_COLOR, MAIN_MENU_PLAY_BUTTON, 3, 10)
@@ -358,6 +367,8 @@ def setGameWindow():
     setCategory()
     setPriceForLetter()
     buttonClicked = bool(False)
+    isNameGiven = bool(False)
+    playerName = str('')
     run = bool(True)
     while(run):
         CLOCK.tick(FPS)
@@ -368,52 +379,65 @@ def setGameWindow():
                 if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 610 and mousePos[1] <= 670):
                     buttonClicked = bool(True)
             if(event.type == pygame.KEYDOWN):
-                error_message_type = int(0)
-                if(event.key == pygame.K_BACKSPACE):
-                    inputBoxText = inputBoxText[:-1]
-                elif(event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
-                    inputBoxText = str(inputBoxText.upper())
-                    if(bingo):
-                        if(inputBoxText == word):
-                            for letter in inputBoxText:
-                                if(letter not in guessedLetters):
-                                    guessedLetters.append(letter)
-                            win = bool(True)
-                            inputBoxText = str('')
-                            break
+                if(isNameGiven):
+                    error_message_type = int(0)
+                    if(event.key == pygame.K_BACKSPACE):
+                        inputBoxText = inputBoxText[:-1]
+                    elif(event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
+                        inputBoxText = str(inputBoxText.upper())
+                        if(bingo):
+                            if(inputBoxText == word):
+                                for letter in inputBoxText:
+                                    if(letter not in guessedLetters):
+                                        guessedLetters.append(letter)
+                                win = bool(True)
+                                inputBoxText = str('')
+                                break
+                            else:
+                                bingo = bool(False)
+                                error_message_type = int(3)
+                        elif(inputBoxText == 'BINGO'):
+                            bingo = bool(True)
+                        elif(inputBoxText not in alphabet):
+                            error_message_type = int(1)
+                            setPriceForLetter()
+                        elif(inputBoxText in vowels):
+                            if(balance >= 500):
+                                alphabet.remove(inputBoxText)                            
+                                guessedLetters.append(inputBoxText)
+                                balance -= 500
+                            else:
+                                error_message_type = int(2)
+                            setPriceForLetter()
                         else:
-                            bingo = bool(False)
-                            error_message_type = int(3)
-                    elif(inputBoxText == 'BINGO'):
-                        bingo = bool(True)
-                    elif(inputBoxText not in alphabet):
-                        error_message_type = int(1)
-                        setPriceForLetter()
-                    elif(inputBoxText in vowels):
-                        if(balance >= 500):
-                            alphabet.remove(inputBoxText)                            
+                            alphabet.remove(inputBoxText)
                             guessedLetters.append(inputBoxText)
-                            balance -= 500
-                        else:
-                            error_message_type = int(2)
-                        setPriceForLetter()
+                            for char in range(len(word)):
+                                if word[char] == inputBoxText:
+                                    balance += amount
+                            setPriceForLetter()
+                        inputBoxText = str('')
                     else:
-                        alphabet.remove(inputBoxText)
-                        guessedLetters.append(inputBoxText)
-                        for char in range(len(word)):
-                            if word[char] == inputBoxText:
-                                balance += amount
-                        setPriceForLetter()
-                    inputBoxText = str('')
+                        inputBoxText += str(event.unicode)
                 else:
-                    inputBoxText += str(event.unicode)
+                    if(event.key == pygame.K_BACKSPACE):
+                        inputBoxText = inputBoxText[:-1]
+                    elif(event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
+                        playerName = inputBoxText
+                        isNameGiven = bool(True)
+                        inputBoxText = str('')
+                    else:
+                        inputBoxText += str(event.unicode)
         mousePos = pygame.mouse.get_pos()
         setBackground()
         setGameNameLogo()
-        setCategoryText()
-        setWordPuzzle()
-        setPriceForLetterText()
-        setCurrentBalance()
+        if(isNameGiven):
+            setCategoryText()
+            setWordPuzzle()
+            setPriceForLetterText()
+            setCurrentBalance()
+        else:
+            setWriteNameMessage()
         setTextBox()
         setErrorMessageBox()
         setWinMessage()
@@ -422,6 +446,8 @@ def setGameWindow():
         if(buttonClicked):
             break
         if(win):
+            with open("wyniki.txt", "a", encoding='utf-8') as file:
+                file.write(playerName + ' ' + str(balance) + '\n')
             sleep(10)
             break
     if(buttonClicked):
@@ -443,6 +469,7 @@ def setGameWindow():
                         return False
                 else:
                     inputBoxText += str(event.unicode)
+        mousePos = pygame.mouse.get_pos()
         setBackground()
         setGameNameLogo()
         setCategoryText()
@@ -451,7 +478,7 @@ def setGameWindow():
         setCurrentBalance()
         setTextBox()
         setPlayAgainMessage() 
-        setBackToMainMenuButton()   
+        setBackToMainMenuButton(mousePos)   
         pygame.display.update()
         if(buttonClicked):
             break
