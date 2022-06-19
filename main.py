@@ -95,10 +95,6 @@ MAIN_MENU_PLAY_TEXT_Y_POS = int(110)
 MAIN_MENU_INFO_TEXT_Y_POS = int(210)
 MAIN_MENU_SCORE_TEXT_Y_POS = int(310)
 
-COPYRIGHT_FONT = pygame.font.SysFont('Lato', 12)
-COPYRIGHT1_Y_POS = int(640)
-COPYRIGHT2_Y_POS = int(660)
-
 BACK_TO_MAIN_MENU_BUTTON = pygame.Rect(490, 610, 300, 60)   # X, Y, WIDTH, HEIGHT
 BACK_TO_MAIN_MENU_TEXT_Y_POS = int(620)
 
@@ -325,14 +321,6 @@ def setMainMenuButtons(mousePos: Tuple[int, int]):
     WINDOW.blit(gameInfoText, (gameInfoTextXPos, MAIN_MENU_INFO_TEXT_Y_POS))
     WINDOW.blit(scoreText, (scoreTextXPos, MAIN_MENU_SCORE_TEXT_Y_POS))
 
-def setCopyrightText():
-    copyright1 = COPYRIGHT_FONT.render('CrisProgrammerStudio © 2022', True, DESCRIPTION_FONT_COLOR)
-    copyright2 = COPYRIGHT_FONT.render('Wszelkie prawa zastrzeżone', True, DESCRIPTION_FONT_COLOR)
-    copyright1XPos = (WIDTH - copyright1.get_size()[0]) / 2
-    copyright2XPos = (WIDTH - copyright2.get_size()[0]) / 2
-    WINDOW.blit(copyright1, (copyright1XPos, COPYRIGHT1_Y_POS))
-    WINDOW.blit(copyright2, (copyright2XPos, COPYRIGHT2_Y_POS))
-
 def setBackToMainMenuButton(mousePos: Tuple[int, int]):
     if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 610 and mousePos[1] <= 670):
         pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_HOVER_COLOR, BACK_TO_MAIN_MENU_BUTTON, 3, 10)
@@ -491,7 +479,6 @@ def setMainMenuWindow():
         setBackground()
         setGameNameLogo()
         setMainMenuButtons(mousePos)
-        setCopyrightText()
         pygame.display.update()
         if(buttonType != 0):
             break
