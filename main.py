@@ -1,6 +1,7 @@
 import json
-from typing import Tuple
 import pygame
+from re import search, findall
+from typing import Tuple
 from random import choices, randint
 from time import sleep
 
@@ -97,6 +98,10 @@ MAIN_MENU_SCORE_TEXT_Y_POS = int(310)
 
 BACK_TO_MAIN_MENU_BUTTON = pygame.Rect(490, 610, 300, 60)   # X, Y, WIDTH, HEIGHT
 BACK_TO_MAIN_MENU_TEXT_Y_POS = int(620)
+
+TOP_PLAYERS_COUNT = int(10)
+TOP_PLAYERS_STARTING_Y_POS = int(150)
+TOP_PLAYERS_Y_POS_DIF = int(40)
 
 with open('kategorie.json', 'r', encoding='utf-8') as file:
     content = json.loads(file.read())
@@ -331,6 +336,22 @@ def setBackToMainMenuButton(mousePos: Tuple[int, int]):
     backToMainMenuTextXPos = (WIDTH - backToMainMenuText.get_size()[0]) / 2
     WINDOW.blit(backToMainMenuText, (backToMainMenuTextXPos, BACK_TO_MAIN_MENU_TEXT_Y_POS))
 
+def setTopScores():
+    fileContent = open('wyniki.txt', 'r', encoding='utf-8').read().splitlines()
+    topPlayers = sorted(fileContent, key=lambda x: int(search('\d+', x).group(0)), reverse=True)
+    top10Text = DESCRIPTION_FONT.render(f'Wyniki {TOP_PLAYERS_COUNT} najlepszych graczy:', True, DESCRIPTION_FONT_COLOR)
+    top10TextXPos = (WIDTH - top10Text.get_size()[0]) / 2
+    WINDOW.blit(top10Text, (top10TextXPos, TOP_PLAYERS_STARTING_Y_POS))
+    position = int(0)
+    for i in topPlayers[:TOP_PLAYERS_COUNT]:
+        position += 1
+        player = str(findall("(\w+[a-zA-Z])", str(i)))[2:-2]
+        score = str(findall("\d+", str(i)))[2:-2]
+        text = f'{position} {player} $ {score}'
+        topText = DESCRIPTION_FONT.render(text, True, DESCRIPTION_FONT_COLOR)
+        topTextXPos = (WIDTH - topText.get_size()[0]) / 2
+        WINDOW.blit(topText, (topTextXPos, TOP_PLAYERS_STARTING_Y_POS + TOP_PLAYERS_Y_POS_DIF * position))
+
 def setGameWindow():
     global inputBoxText, alphabet, error_message_type, balance, bingo, win
     setNotConstantVariables()
@@ -459,6 +480,28 @@ def setGameInfoWindow():
     if(buttonClicked):
         return False
 
+def setTopScoresWindow():
+    buttonClicked = bool(False)
+    run = bool(True)
+    while(run):
+        CLOCK.tick(FPS)
+        for event in pygame.event.get():
+            if(event.type == pygame.QUIT):
+                run = bool(False)
+            if(event.type == pygame.MOUSEBUTTONDOWN):
+                if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 610 and mousePos[1] <= 670):
+                    buttonClicked = bool(True)
+        mousePos = pygame.mouse.get_pos()
+        setBackground()
+        setGameNameLogo()
+        setTopScores()
+        setBackToMainMenuButton(mousePos)
+        pygame.display.update()
+        if(buttonClicked):
+            break
+    if(buttonClicked):
+        return False
+
 def setMainMenuWindow():
     buttonType = int(0)
     run = bool(True)
@@ -498,6 +541,9 @@ def main():
         elif(buttonType == 2):
             while(runTab):
                 runTab = setGameInfoWindow()
+        elif(buttonType == 3):
+            while(runTab):
+                runTab = setTopScoresWindow()
         if(runTab is None):
             break
     pygame.quit()
