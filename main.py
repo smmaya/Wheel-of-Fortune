@@ -1,4 +1,5 @@
 import json
+from typing import Tuple
 import pygame
 from random import choices, randint
 from time import sleep
@@ -7,6 +8,7 @@ pygame.init()
 
 WIDTH, HEIGHT = int(1280), int(720)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+CLOCK = pygame.time.Clock()
 FPS = int(60)
 
 BG_COLOR = (int(30), int(39), int(46)) # R, G, B
@@ -79,6 +81,23 @@ WIN_MESSAGE_FONT_COLOR = (int(11), int(232), int(129))
 WIN_MESSAGE_Y_POS = ERROR_MESSAGE_Y_POS
 
 win = bool(False)
+
+MAIN_MENU_PLAY_BUTTON = pygame.Rect(490, 100, 300, 60)      # X, Y, WIDTH, HEIGHT
+MAIN_MENU_INFO_BUTTON = pygame.Rect(490, 200, 300, 60)      # X, Y, WIDTH, HEIGHT 
+MAIN_MENU_SCORE_BUTTON = pygame.Rect(490, 300, 300, 60)     # X, Y, WIDTH, HEIGHT 
+MAIN_MENU_BUTTON_COLOR = INPUT_BOX_COLOR
+MAIN_MENU_BUTTON_HOVER_COLOR = (int(255), int(63), int(52))
+MAIN_MENU_BUTTON_HOVER_BG_COLOR = (int(72), int(84), int(96))
+MAIN_MENU_BUTTON_FONT = INPUT_BOX_FONT
+MAIN_MENU_BUTTON_FONT_COLOR = INPUT_BOX_FONT_COLOR
+MAIN_MENU_BUTTON_HOVER_FONT_COLOR = (int(60), int(64), int(198)) #rgb(60, 64, 198)
+MAIN_MENU_PLAY_TEXT_Y_POS = int(110)
+MAIN_MENU_INFO_TEXT_Y_POS = int(210)
+MAIN_MENU_SCORE_TEXT_Y_POS = int(310)
+
+COPYRIGHT_FONT = pygame.font.SysFont('Lato', 12)
+COPYRIGHT1_Y_POS = int(640)
+COPYRIGHT2_Y_POS = int(660)
 
 with open('kategorie.json', 'r', encoding='utf-8') as file:
     content = json.loads(file.read())
@@ -277,16 +296,48 @@ def setPlayAgainMessage():
     playAgainXPos = (WIDTH - playAgain.get_size()[0]) /2
     WINDOW.blit(playAgain, (playAgainXPos, WIN_MESSAGE_Y_POS))
 
-def main():
+def setMainMenuButtons(mousePos: Tuple[int, int]):
+    if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 100 and mousePos[1] <= 160):
+        pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_HOVER_COLOR, MAIN_MENU_PLAY_BUTTON, 3, 10)
+        playText = MAIN_MENU_BUTTON_FONT.render('Graj', True, MAIN_MENU_BUTTON_HOVER_FONT_COLOR)
+    else:
+        pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_COLOR, MAIN_MENU_PLAY_BUTTON, 3, 10)
+        playText = MAIN_MENU_BUTTON_FONT.render('Graj', True, MAIN_MENU_BUTTON_FONT_COLOR)
+    if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 200 and mousePos[1] <= 260):
+        pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_HOVER_COLOR, MAIN_MENU_INFO_BUTTON, 3, 10)
+        gameInfoText = MAIN_MENU_BUTTON_FONT.render('Jak grać?', True, MAIN_MENU_BUTTON_HOVER_FONT_COLOR)
+    else:
+        pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_COLOR, MAIN_MENU_INFO_BUTTON, 3, 10)
+        gameInfoText = MAIN_MENU_BUTTON_FONT.render('Jak grać?', True, MAIN_MENU_BUTTON_FONT_COLOR)
+    if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 300 and mousePos[1] <= 360):
+        pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_HOVER_COLOR, MAIN_MENU_SCORE_BUTTON, 3, 10)
+        scoreText = MAIN_MENU_BUTTON_FONT.render('Wyniki', True, MAIN_MENU_BUTTON_HOVER_FONT_COLOR)
+    else:
+        pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_COLOR, MAIN_MENU_SCORE_BUTTON, 3, 10)
+        scoreText = MAIN_MENU_BUTTON_FONT.render('Wyniki', True, MAIN_MENU_BUTTON_FONT_COLOR)
+    playTextXPos = (WIDTH - playText.get_size()[0]) / 2
+    gameInfoTextXPos = (WIDTH - gameInfoText.get_size()[0]) / 2
+    scoreTextXPos = (WIDTH - scoreText.get_size()[0]) / 2
+    WINDOW.blit(playText, (playTextXPos, MAIN_MENU_PLAY_TEXT_Y_POS))
+    WINDOW.blit(gameInfoText, (gameInfoTextXPos, MAIN_MENU_INFO_TEXT_Y_POS))
+    WINDOW.blit(scoreText, (scoreTextXPos, MAIN_MENU_SCORE_TEXT_Y_POS))
+
+def setCopyrightText():
+    copyright1 = COPYRIGHT_FONT.render('CrisProgrammerStudio © 2022', True, DESCRIPTION_FONT_COLOR)
+    copyright2 = COPYRIGHT_FONT.render('Wszelkie prawa zastrzeżone', True, DESCRIPTION_FONT_COLOR)
+    copyright1XPos = (WIDTH - copyright1.get_size()[0]) / 2
+    copyright2XPos = (WIDTH - copyright2.get_size()[0]) / 2
+    WINDOW.blit(copyright1, (copyright1XPos, COPYRIGHT1_Y_POS))
+    WINDOW.blit(copyright2, (copyright2XPos, COPYRIGHT2_Y_POS))
+
+def setGameWindow():
     global inputBoxText, alphabet, error_message_type, balance, bingo, win
     setNotConstantVariables()
     setCategory()
     setPriceForLetter()
-    pygame.display.set_caption("NIEKoło NIEfortuny")
-    clock = pygame.time.Clock()
     run = bool(True)
     while(run):
-        clock.tick(FPS)
+        CLOCK.tick(FPS)
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 run = bool(False)
@@ -345,7 +396,7 @@ def main():
             sleep(10)
             break
     while(run):
-        clock.tick(FPS)
+        CLOCK.tick(FPS)
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 run = bool(False)
@@ -370,9 +421,44 @@ def main():
         pygame.display.update()
     pygame.quit()
 
-if __name__ == "__main__":
+def setMainMenuWindow():
+    buttonType = int(0)
     run = bool(True)
     while(run):
-        run = bool(main())
+        CLOCK.tick(FPS)
+        for event in pygame.event.get():
+            if(event.type == pygame.QUIT):
+                run = bool(False)
+            if(event.type == pygame.MOUSEBUTTONDOWN):
+                if(mousePos[0] >= 490 and mousePos[0] <= 790):
+                    if(mousePos[1] >= 100 and mousePos[1] <= 160):
+                        buttonType = int(1)
+                    elif(mousePos[1] >= 200 and mousePos[1] <= 260):
+                        buttonType = int(2)
+                    elif(mousePos[1] >= 300 and mousePos[1] <= 360):
+                        buttonType = int(3)
+        mousePos = pygame.mouse.get_pos()
+        setBackground()
+        setGameNameLogo()
+        setMainMenuButtons(mousePos)
+        setCopyrightText()
+        pygame.display.update()
+        if(buttonType != 0):
+            break
+    return buttonType
+
+def main():    
+    pygame.display.set_caption("NIEkoło NIEfortuny")
+    run = bool(True)
+    while(run):
+        buttonType = setMainMenuWindow()
+        runTabType = bool(True)
+        if(buttonType == 0):
+            break
+        elif(buttonType == 1):
+            while(runTabType):
+                runTabType = bool(setGameWindow())
     pygame.quit()
-        
+
+if __name__ == "__main__":
+    main()
