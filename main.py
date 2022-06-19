@@ -19,20 +19,20 @@ DESCRIPTION_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
 DESCRIPTION_FONT_COLOR = (int(52), int(231), int(228)) # R, G, B
 
 GAME_NAME_LOGO_Y_POS = int(10)
-DESCRIPTION1_Y_POS = int(60)
-DESCRIPTION2_Y_POS = int(100)
-DESCRIPTION3_Y_POS = int(140)
+DESCRIPTION1_Y_POS = int(150)
+DESCRIPTION2_Y_POS = int(190)
+DESCRIPTION3_Y_POS = int(230)
 
-INPUT_BOX = pygame.Rect(50, 610, 1180, 60) # X, Y, WIDTH, HEIGHT 
+INPUT_BOX = pygame.Rect(50, 520, 1180, 60) # X, Y, WIDTH, HEIGHT 
 INPUT_BOX_COLOR = (int(255), int(168), int(1)) # R, G, B
-INPUT_BOX_FILL = pygame.Rect(53, 613, 1174, 54) # X, Y, WIDTH, HEIGHT 
+INPUT_BOX_FILL = pygame.Rect(53, 523, 1174, 54) # X, Y, WIDTH, HEIGHT 
 INPUT_BOX_FONT = pygame.font.SysFont('Lato', 30) # FontFamily, FontSize
 INPUT_BOX_FONT_COLOR = (int(0), int(216), int(214)) # R, G, B
 inputBoxText = str('')
-INPUT_BOX_TEXT_POS = (int(60), int(620)) # X, Y
+INPUT_BOX_TEXT_POS = (int(60), int(530)) # X, Y
 
-CATEGORY_TEXT_Y_POS = int(220)
-NUMBER_OF_LETTERS_Y_POS = int(260)
+CATEGORY_TEXT_Y_POS = int(150)
+NUMBER_OF_LETTERS_Y_POS = int(190)
 category = str()
 word = str()
 numberOfLetters = int()
@@ -45,22 +45,22 @@ SINGLE_LETTER_BOX_HEIGHT = int(60)
 SINGLE_LETTER_BOX_FILL_WIDTH = int(34)
 SINGLE_LETTER_BOX_FILL_HEIGHT = int(54)
 SPACE_BETWEEN_LETTERS = int(10)
-FIRST_ROW_BOX_Y_POS = int(310)
-FIRST_ROW_BOX_FILL_Y_POS = int(313)
-SECOND_ROW_BOX_Y_POS = int(380)
-SECOND_ROW_BOX_FILL_Y_POS = int(383)
-THIRD_ROW_BOX_Y_POS = int(450)
-THIRD_ROW_BOX_FILL_Y_POS = int(453)
+FIRST_ROW_BOX_Y_POS = int(240)
+FIRST_ROW_BOX_FILL_Y_POS = int(243)
+SECOND_ROW_BOX_Y_POS = int(310)
+SECOND_ROW_BOX_FILL_Y_POS = int(313)
+THIRD_ROW_BOX_Y_POS = int(380)
+THIRD_ROW_BOX_FILL_Y_POS = int(383)
 COMMA_FONT = pygame.font.SysFont('Lato', 60) # FontFamily, FontSize
 
 amount = int()
-PRICE_FOR_LETTER_TEXT_POS = (int(50), int(540))
+PRICE_FOR_LETTER_TEXT_POS = (int(50), int(460))
 
 balance = int(0)
-BALANCE_DESCRIPTION_TEXT_POS = (int(850), int(540))
-CURRENT_BALANCE_BOX = pygame.Rect(1000, 530, 230, 60)
-CURRENT_BALANCE_BOX_FILL = pygame.Rect(1003, 533, 224, 54)
-CURRENT_BALANCE_TEXT_POS = (int(1010), int(540))
+BALANCE_DESCRIPTION_TEXT_POS = (int(850), int(460))
+CURRENT_BALANCE_BOX = pygame.Rect(1000, 450, 230, 60)
+CURRENT_BALANCE_BOX_FILL = pygame.Rect(1003, 453, 224, 54)
+CURRENT_BALANCE_TEXT_POS = (int(1010), int(460))
 
 alphabet = ['Ą', 'ą', 'Ć', 'ć', 'Ę', 'ę', 'Ł', 'ł', 'Ń', 'ń', 'Ó', 'ó', 'Ś', 'ś', 'Ź', 'ź', 'Ż', 'ż', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
@@ -72,7 +72,7 @@ guessedLetters = list[str]()
 error_message_type = int(0)
 ERROR_MESSAGE_FONT = DESCRIPTION_FONT
 ERROR_MESSAGE_FONT_COLOR = (int(245), int(59), int(87))
-ERROR_MESSAGE_Y_POS = int(620)
+ERROR_MESSAGE_Y_POS = int(530)
 
 bingo = False
 
@@ -98,6 +98,9 @@ MAIN_MENU_SCORE_TEXT_Y_POS = int(310)
 COPYRIGHT_FONT = pygame.font.SysFont('Lato', 12)
 COPYRIGHT1_Y_POS = int(640)
 COPYRIGHT2_Y_POS = int(660)
+
+BACK_TO_MAIN_MENU_BUTTON = pygame.Rect(490, 610, 300, 60)   # X, Y, WIDTH, HEIGHT
+BACK_TO_MAIN_MENU_TEXT_Y_POS = int(620)
 
 with open('kategorie.json', 'r', encoding='utf-8') as file:
     content = json.loads(file.read())
@@ -133,7 +136,7 @@ def setGameNameLogo():
 def setGameDescription():
     description1 = DESCRIPTION_FONT.render('Zgaduj po jednej literze na raz. Aby kupić samogłoskę, musisz mieć $500.', True, DESCRIPTION_FONT_COLOR)
     description2 = DESCRIPTION_FONT.render('Jeśli sądzisz, że znasz całe słowo lub zdanie, wpisz \'bingo\' i wciśnij enter.', True, DESCRIPTION_FONT_COLOR)
-    description3 = DESCRIPTION_FONT.render('Następnie podaj słowo lub zdanie. Otrzymasz wtedy wartość każdej spółgłoski', True, DESCRIPTION_FONT_COLOR)
+    description3 = DESCRIPTION_FONT.render('Następnie podaj słowo lub zdanie.', True, DESCRIPTION_FONT_COLOR)
     description1XPos = (WIDTH - description1.get_size()[0]) / 2
     description2XPos = (WIDTH - description2.get_size()[0]) / 2
     description3XPos = (WIDTH - description3.get_size()[0]) / 2
@@ -330,17 +333,31 @@ def setCopyrightText():
     WINDOW.blit(copyright1, (copyright1XPos, COPYRIGHT1_Y_POS))
     WINDOW.blit(copyright2, (copyright2XPos, COPYRIGHT2_Y_POS))
 
+def setBackToMainMenuButton(mousePos: Tuple[int, int]):
+    if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 610 and mousePos[1] <= 670):
+        pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_HOVER_COLOR, BACK_TO_MAIN_MENU_BUTTON, 3, 10)
+        backToMainMenuText = MAIN_MENU_BUTTON_FONT.render('Powrót do menu', True, MAIN_MENU_BUTTON_HOVER_FONT_COLOR)
+    else:
+        pygame.draw.rect(WINDOW, MAIN_MENU_BUTTON_COLOR, BACK_TO_MAIN_MENU_BUTTON, 3, 10)
+        backToMainMenuText = MAIN_MENU_BUTTON_FONT.render('Powrót do menu', True, MAIN_MENU_BUTTON_FONT_COLOR)
+    backToMainMenuTextXPos = (WIDTH - backToMainMenuText.get_size()[0]) / 2
+    WINDOW.blit(backToMainMenuText, (backToMainMenuTextXPos, BACK_TO_MAIN_MENU_TEXT_Y_POS))
+
 def setGameWindow():
     global inputBoxText, alphabet, error_message_type, balance, bingo, win
     setNotConstantVariables()
     setCategory()
     setPriceForLetter()
+    buttonClicked = bool(False)
     run = bool(True)
     while(run):
         CLOCK.tick(FPS)
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 run = bool(False)
+            if(event.type == pygame.MOUSEBUTTONDOWN):
+                if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 610 and mousePos[1] <= 670):
+                    buttonClicked = bool(True)
             if(event.type == pygame.KEYDOWN):
                 error_message_type = int(0)
                 if(event.key == pygame.K_BACKSPACE):
@@ -381,9 +398,9 @@ def setGameWindow():
                     inputBoxText = str('')
                 else:
                     inputBoxText += str(event.unicode)
+        mousePos = pygame.mouse.get_pos()
         setBackground()
         setGameNameLogo()
-        setGameDescription()
         setCategoryText()
         setWordPuzzle()
         setPriceForLetterText()
@@ -391,15 +408,23 @@ def setGameWindow():
         setTextBox()
         setErrorMessageBox()
         setWinMessage()
+        setBackToMainMenuButton(mousePos)
         pygame.display.update()
+        if(buttonClicked):
+            break
         if(win):
             sleep(10)
             break
+    if(buttonClicked):
+        return False
     while(run):
         CLOCK.tick(FPS)
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 run = bool(False)
+            if(event.type == pygame.MOUSEBUTTONDOWN):
+                if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 610 and mousePos[1] <= 670):
+                    buttonClicked = bool(True)
             if(event.type == pygame.KEYDOWN):
                 if(event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN):
                     inputBoxText = str(inputBoxText.upper())
@@ -411,14 +436,40 @@ def setGameWindow():
                     inputBoxText += str(event.unicode)
         setBackground()
         setGameNameLogo()
-        setGameDescription()
         setCategoryText()
         setWordPuzzle()
         setPriceForLetterText()
         setCurrentBalance()
         setTextBox()
-        setPlayAgainMessage()    
+        setPlayAgainMessage() 
+        setBackToMainMenuButton()   
         pygame.display.update()
+        if(buttonClicked):
+            break
+    if(buttonClicked):
+        return False
+
+def setGameInfoWindow():
+    buttonClicked = bool(False)
+    run = bool(True)
+    while(run):
+        CLOCK.tick(FPS)
+        for event in pygame.event.get():
+            if(event.type == pygame.QUIT):
+                run = bool(False)
+            if(event.type == pygame.MOUSEBUTTONDOWN):
+                if(mousePos[0] >= 490 and mousePos[0] <= 790 and mousePos[1] >= 610 and mousePos[1] <= 670):
+                    buttonClicked = bool(True)
+        mousePos = pygame.mouse.get_pos()
+        setBackground()
+        setGameNameLogo()
+        setGameDescription()
+        setBackToMainMenuButton(mousePos)
+        pygame.display.update()
+        if(buttonClicked):
+            break
+    if(buttonClicked):
+        return False
 
 def setMainMenuWindow():
     buttonType = int(0)
@@ -451,13 +502,16 @@ def main():
     run = bool(True)
     while(run):
         buttonType = setMainMenuWindow()
-        runTabType = bool(True)
+        runTab = bool(True)
         if(buttonType == 0):
             break
         elif(buttonType == 1):
-            while(runTabType):
-                runTabType = setGameWindow()
-        if(runTabType is None):
+            while(runTab):
+                runTab = setGameWindow()
+        elif(buttonType == 2):
+            while(runTab):
+                runTab = setGameInfoWindow()
+        if(runTab is None):
             break
     pygame.quit()
 
