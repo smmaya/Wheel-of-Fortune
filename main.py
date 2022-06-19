@@ -419,7 +419,6 @@ def setGameWindow():
         setTextBox()
         setPlayAgainMessage()    
         pygame.display.update()
-    pygame.quit()
 
 def setMainMenuWindow():
     buttonType = int(0)
@@ -457,7 +456,9 @@ def main():
             break
         elif(buttonType == 1):
             while(runTabType):
-                runTabType = bool(setGameWindow())
+                runTabType = setGameWindow()
+        if(runTabType is None):
+            break
     pygame.quit()
 
 if __name__ == "__main__":
